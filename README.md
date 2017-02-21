@@ -1,0 +1,47 @@
+# Respectrable
+*Bi-directional communication with Ableton Live via Cycling '74's Max*
+
+### Overview
+The point is to create a bridge so that any change to a Live Set sends out an OSC notification and and element of a Live Set can be changed with an OSC message
+
+
+### Set up
+The  `ableton_demo.als` located in the root and `touch_demo.toe` file located in the `touch_designer` directory are meant to be used to demo the project
+
+The `max_patch` folder contains all the necessary files for the Max implementation
+
+### Instructions
+- Make sure to add this folder to the Max search path
+- Add `spectra_max.amxd` to the master track on a Live set
+- Take note of the networking information in *settings.json*. This contains the ports on which to receive and the hosts and ports to which data is sent
+ 
+### API
+- Respectrable sends two types of messages: *channel* and *message*. The *channel* messages are messages for which there is a Max object in the patch (a limited number of live properties have [live.observers](https://docs.cycling74.com/max6/dynamic/c74_docs.html#live.observer) attached to them). The *message* types are sent in response to a call to the API (see below). The messages are sent on different ports, to the destination specified in *settings.json*
+- After initialization the current value for each observed property on each observed LOM object will be sent via OSC in the specified format:
+	
+    `/frommax/canonical_path property value`
+	- `canonical_path` is the LOM canonical path with spaces replaced by `/`
+	- `property` is the first argument and is the `Name` of the property that is being observed
+	- `value` is the second argument. 
+	
+    e.g. `/frommax/live_set/tracks/0 output_meter_left 0.5`
+
+- To set or get a property an OSC message should be sent in the same format. That is:
+`/tomax/canonical_path messageType property (value)`
+
+	- `canonical_path` is the LOM Canonical path
+	- `messageType` is either `set` or `get` or `call` (if a function is being called)
+	- `property` is either the name of the property that is being set or gotten or the name of the function to call
+	- `value` should only be included in a `set` message in which case it is the value to set
+
+
+#### Required Software
+- Ableton Live 9+
+- Max for Live
+
+#### References
+- [Live Object Model](https://docs.cycling74.com/max7/vignettes/live_object_model) (Neccesary to understand)
+
+### License
+(c) 2017 Willy Nolan [MIT License](https://en.wikipedia.org/wiki/MIT_License)
+

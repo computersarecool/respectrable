@@ -1,0 +1,27 @@
+{
+  "networking": {
+    "hosts": [
+      "localhost"
+    ],
+    "tempToMaxChannel": {
+      "port": 7071
+    },
+    "tempToMaxMessage": {
+      "port": 7091
+    },
+    "toMaxChannel": {
+      "port": 7070
+    },
+    "toMaxMessage": {
+      "port": 7090
+    },
+    "fromMaxChannel": {
+      "port": 7040
+    },
+    "fromMaxMessage": {
+      "port": 7030
+    },
+    "mainAddress": "127.0.0.1",
+    "nodeHTTPPort": 8000
+  }
+}
