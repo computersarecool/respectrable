@@ -16,7 +16,7 @@ The `max_patch` folder contains all the necessary files for the Max implementati
 - Take note of the networking information in *settings.json*. This contains the ports on which to receive and the hosts and ports to which data is sent
  
 ### API
-- Respectrable sends two types of messages: *channel* and *message*. The *channel* messages are messages for which there is a Max object in the patch (a limited number of live properties have [live.observers](https://docs.cycling74.com/max6/dynamic/c74_docs.html#live.observer) attached to them). The *message* types are sent in response to a call to the API (see below). The messages are sent on different ports, to the destination specified in *settings.json*
+- Respectrable sends two types of messages: *channel* and *message*. The *channel* messages are messages for which there is a Max object in the patch (a limited number of live properties have [live.observers](https://docs.cycling74.com/max6/dynamic/c74_docs.html#live.observer) attached to them - see table). The *message* types are sent in response to a call to the API (see below). The messages are sent on different ports, to the destination specified in *settings.json*
 - After initialization the current value for each observed property on each observed LOM object will be sent via OSC in the specified format:
 	
     `/frommax/canonical_path property value`
@@ -24,9 +24,9 @@ The `max_patch` folder contains all the necessary files for the Max implementati
 	- `property` is the first argument and is the `Name` of the property that is being observed
 	- `value` is the second argument. 
 	
-    e.g. `/frommax/live_set/tracks/0 output_meter_left 0.5`
+    e.g. `/frommax/live_set/tracks/0 ['output_meter_left', 0.5]`
 
-- To set or get a property an OSC message should be sent in the same format. That is:
+- To set or get a property an OSC message should be sent in the same format except prefixex with `/tomax`. That is:
 `/tomax/canonical_path messageType property (value)`
 
 	- `canonical_path` is the LOM Canonical path
@@ -34,6 +34,17 @@ The `max_patch` folder contains all the necessary files for the Max implementati
 	- `property` is either the name of the property that is being set or gotten or the name of the function to call
 	- `value` should only be included in a `set` message in which case it is the value to set
 
+	e.g. `/tomax/live_set/tracks/0 ['set', 'color', 0] `
+
+#### Properties Observered with live.observers	
+
+| live_set                       | tracks             | active_clip      | devices    | mixer_device            | clip  |
+|--------------------------------|--------------------|------------------|------------|-------------------------|-------|
+| 4 EQ Band (from custom object) | output_meter_right | length           | parameters | panning                 | color |
+| tempo                          | output_meter_left  | playing_position |            | volume                  |       |
+| clip_trigger_quantization      | color              |                  |            | track_activator (value) |       |
+|                                | playing_slot_index |                  |            |                         |       |
+|                                | solo               |                  |            |                         |       |
 
 #### Required Software
 - Ableton Live 9+
