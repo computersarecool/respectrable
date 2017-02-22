@@ -17,7 +17,7 @@ The `max_patch` folder contains all the necessary files for the Max implementati
  
 ### API
 - Respectrable sends two types of messages: *channel* and *message*. The *channel* messages are messages for which there is a Max object in the patch (a limited number of live properties have [live.observers](https://docs.cycling74.com/max6/dynamic/c74_docs.html#live.observer) attached to them - see table). The *message* types are sent in response to a call to the API (see below). The messages are sent on different ports, to the destination specified in *settings.json*
-- After initialization the current value for each observed property on each observed LOM object will be sent via OSC in the specified format:
+- After initialization the current value for each observed property on each observed LOM object will be sent via OSC in the specified format (any changes will send an update in value in the same format):
 	
     `/frommax/canonical_path property value`
 	- `canonical_path` is the LOM canonical path with spaces replaced by `/`
