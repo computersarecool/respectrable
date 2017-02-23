@@ -26,7 +26,7 @@ The `max_patch` folder contains all the necessary files for the Max implementati
 	
     e.g. `/frommax/live_set/tracks/0 ['output_meter_left', 0.5]`
 
-- To set or get a property (or to `call` a function) an OSC message should be sent in the same format except prefixex with `/tomax`. That is:
+- To `set` or `get` a property (or to `call` a function) an OSC message should be sent in the same format except prefixex with `/tomax`. That is:
 `/tomax/canonical_path messageType property (value)`
 
 	- `canonical_path` is the LOM Canonical path
