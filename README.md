@@ -26,7 +26,7 @@ The `max_patch` folder contains all the necessary files for the Max implementati
 	
     e.g. `/frommax/live_set/tracks/0 ['output_meter_left', 0.5]`
 
-- To set or get a property an OSC message should be sent in the same format except prefixex with `/tomax`. That is:
+- To set or get a property (or to `call` a function) an OSC message should be sent in the same format except prefixex with `/tomax`. That is:
 `/tomax/canonical_path messageType property (value)`
 
 	- `canonical_path` is the LOM Canonical path
@@ -38,13 +38,13 @@ The `max_patch` folder contains all the necessary files for the Max implementati
 
 #### Properties Observered with live.observers	
 
-| live_set                       | tracks             | active_clip      | devices    | mixer_device            | clip  |
-|--------------------------------|--------------------|------------------|------------|-------------------------|-------|
-| 4 EQ Band (from custom object) | output_meter_right | length           | parameters | panning                 | color |
-| tempo                          | output_meter_left  | playing_position |            | volume                  |       |
-| clip_trigger_quantization      | color              |                  |            | track_activator (value) |       |
-|                                | playing_slot_index |                  |            |                         |       |
-|                                | solo               |                  |            |                         |       |
+| live_set                          | tracks             | active_clip      | devices    | mixer_device            | clip  |
+|-----------------------------------|--------------------|------------------|------------|-------------------------|-------|
+| 4 EQ Bands (from a custom object) | output_meter_right | length           | parameters | panning                 | color |
+| tempo                             | output_meter_left  | playing_position |            | volume                  |       |
+| clip_trigger_quantization         | color              |                  |            | track_activator (value) |       |
+|                                   | playing_slot_index |                  |            |                         |       |
+|                                   | solo               |                  |            |                         |       |
 
 #### Required Software
 - Ableton Live 9+
