@@ -2,7 +2,7 @@
 *Bi-directional communication with Ableton Live via Cycling '74's Max*
 
 ### Overview
-The point is to create a bridge so that any change to a Live Set sends out an OSC notification and any property of a Live Set can be changed with an OSC message
+The point is to create a bridge so that any change to a Live set sends out an OSC notification and any property of a Live set can be changed with an OSC message
 
 
 ### Setup
