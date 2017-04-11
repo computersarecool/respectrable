@@ -32,7 +32,7 @@ The `max_patch` folder contains all the necessary files for the Max implementati
 
 - To `set` or `get` a property (or to `call` a function) an OSC message should be sent in the same format except prefixed with `/tomax`.
 
-`/tomax/canonical_path messageType property (value)`
+   `/tomax/canonical_path messageType property (value)`
 
 	- `canonical_path` is the LOM Canonical path
 	- `messageType` is either `set` or `get` or `call` (if a function is being called)
