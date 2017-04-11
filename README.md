@@ -23,6 +23,7 @@ The `max_patch` folder contains all the necessary files for the Max implementati
 - After initialization the current value for each observed property on each observed LOM object will be sent via OSC in the following specified format (any changes will send the updated value in the same format):
 	
     `/frommax/canonical_path property value`
+    
 	- `canonical_path` is the LOM canonical path with spaces replaced by `/`
 	- `property` is the first argument and is the `Name` of the property that is being observed
 	- `value` is the second argument
