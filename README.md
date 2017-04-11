@@ -5,7 +5,7 @@
 The point is to create a bridge so that any change to a Live Set sends out an OSC notification and any property of a Live Set can be changed with an OSC message
 
 
-### Set up
+### Setup
 The  `ableton_demo.als` located in the root and `touch_demo.toe` file located in the `touch_designer` directory are meant to be used to demo the project
 
 The `max_patch` folder contains all the necessary files for the Max implementation
@@ -13,10 +13,13 @@ The `max_patch` folder contains all the necessary files for the Max implementati
 ### Instructions
 - Make sure to add this folder to the Max search path
 - Add `spectra_max.amxd` to the master track on a Live set
-- Take note of the networking information in *settings.json*. This contains the ports on which to receive and the hosts and ports to which data is sent
+- Take note of the networking information in `settings.json`. This contains the ports on which to receive and the hosts and ports to which data is sent
  
 ### API
-- Respectrable sends two types of messages: *channel* and *message*. The *channel* messages are messages for which there is a Max object in the patch (a limited number of live properties have [live.observers](https://docs.cycling74.com/max6/dynamic/c74_docs.html#live.observer) attached to them - see table). The *message* types are sent in response to a call to the API (see below). The messages are sent on different ports, to the destination specified in *settings.json*
+- Respectrable sends two types of messages: `channel` and `message`. 
+	- The `channel` messages are messages for which there is a Max object in the patch (a limited number of live properties have [live.observers](https://docs.cycling74.com/max6/dynamic/c74_docs.html#live.observer) attached to them - see the following table). 
+	- The `message` types are sent in response to an API call (see below examples). 
+	- The messages are sent on different ports to the destination(s) specified in `settings.json`
 - After initialization the current value for each observed property on each observed LOM object will be sent via OSC in the specified format (any changes will send an update in value in the same format):
 	
     `/frommax/canonical_path property value`
