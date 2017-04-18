@@ -261,6 +261,7 @@ window.addEventListener('load', () => {
 
   // Debug - click to display LOM
   document.addEventListener('click', () => {
+  	getState()
     console.dir(LOM)
   })
 
