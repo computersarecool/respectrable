@@ -1,3 +1,4 @@
-Samples
-Presets
-under_development
+Samples/
+Presets/
+node_modules/
+bower_components/

@@ -1,0 +1,92 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    background: green;
+    margin: 0;
+    padding: 0;
+    overflow-y: hidden;
+}
+
+button {
+    width: 19%;
+    height: 40%;    
+}
+
+#slider-base {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 150px;
+    height: 450px;
+    background: yellow;
+    overflow: hidden;
+}
+
+#slider-knob {
+    pointer-events: none;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: green;
+}
+
+#call-fire {
+    background: purple;
+    position: absolute;
+    width: 200px;
+    height: 85px;
+    top: 0;
+    right: 0;
+}
+
+svg {
+    position: absolute;
+    left: 200px;
+}
+
+#dial-fill {
+    mask: url('#rect-mask');
+}
+
+#rect-mask {
+   
+}
+
+#button-list button {
+    width: 20%;
+    height: 5em;
+    margin: 0 5% 5% 0;
+}
+
+/*
+
+input {
+    margin: 0;
+}
+
+input[type=range] {
+    -webkit-appearance: slider-vertical;
+    width: 150px;
+    height: 500px;
+    background: #ddd;
+    left: 0;
+    bottom: 0;
+    border: 20px solid green;
+    position: absolute;
+
+    overflow: hidden;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 500px;
+    height: 500px;
+    border: 9px solid purple;
+    background: yellow;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    opacity: 0;
+}
+*/
+
