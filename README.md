@@ -36,14 +36,14 @@ The `front_ends` folder contains example web and TouchDesigner front ends to dem
    `/canonical_path messageType property (value)`
 
 	- `canonical_path` is the LOM Canonical path
-	- `messageType` is either `set` or `get` or `call` (if a function is being called) or `property` if a LiveAPI property is desired (i.e. `id`, `path` etc. which are sligtly different than other properties - see the LOM for details)
+	- `messageType` is either `set` or `get` or `call` (if a function is being called) or `property` to get a LiveAPI property (i.e. `id`, `path` etc. which are sligtly different than other properties - see the LOM for details)
 	- `property` is either the name of the property that is being set or gotten or the name of the function to call (do not confuse with a LiveAPI `property`)
 	- `value` should only be included in a `set` message in which case it is the value to set
 
 	e.g. `/live_set/tracks/0 ['set', 'color', 0] `
 
 - Helper methods
-	Because of the complexity of filling out a client object with individual messages, the helper function `getState` can be called as `/live_set ['get_state']`
+	Because of the complexity of filling out a client object with individual messages, the helper function `getState` can be called as `/live_set ['get_state', true]`
 	This is the only message that will perform logic on the Max side to return JSON formatted string that is a fairly complete state representation of the LOM
 
 #### Properties Observered with live.observers	

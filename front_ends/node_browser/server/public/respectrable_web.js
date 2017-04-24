@@ -1,5 +1,4 @@
 // This code sends data to the node / UDP proxy via websockets
-
 window.addEventListener('load', () => {
   // State holder
   let LOM
@@ -26,18 +25,22 @@ window.addEventListener('load', () => {
 
   // This starts the state collection
   function getState () {
-    getOrSet('live_set', ['get_state'])
+    getOrSet('live_set', ['get_state', true])
   }
 
   // Route packet to correct function
   function routePacket (packet) {
-    console.log(packet)
-    
-    // const messageType = packet.args.shift()
-    // const property = packet.args.shift()
-    // const value = packet.args
-    // const address = packet.address.split(' ')
+    const address = packet.address.split(' ')
+    const messageType = packet.args.shift()
+    const property = packet.args.shift()
+    const value = packet.args
 
+    if (messageType == 'get_state') {
+      state = JSON.parse(value[0])
+      console.log(state)
+    } else {
+      console.log(address, messageType, property, value)
+    }
     // // Live set or child update
     // if (address[0] === 'live_set') {
     //   // live_set direct update
@@ -262,7 +265,6 @@ window.addEventListener('load', () => {
   // Debug - click to display LOM
   document.addEventListener('click', () => {
   	getState()
-    console.dir(LOM)
   })
 
 }, false)
