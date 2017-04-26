@@ -52,14 +52,46 @@ function anything () {
 function getState () {
   'use strict'
 
-  var track_properties = [
+  var clip_properties = [
     'color'
+  ]
+
+  var clip_slots_children = {
+    clip: {
+      properties: clip_properties,
+      children: null
+    }
+  }
+
+  var device_properties = [
+    'name'
+  ]
+
+  var device_children = {
+    parameters: {
+      properties: parameters_properties,
+      children: null
+    }
+  }
+
+  var parameters_properties = [
+    'name',
+    'value'
+  ]
+
+  var track_properties = [
+    'color',
+    'has_midi_input',
+    'mute',
+    'name',
+    'solo',
+    'fired_slot_index'
   ]
 
   var track_children = {
     devices : {
-      properties: null,
-      children: null
+      properties: device_properties,
+      children: device_children
     },
     mixer_device: {
       properties: null,
@@ -126,7 +158,7 @@ function getAllState(pathOrID, propertyObject) {
     Object.keys(propertyObject.children).forEach(function (childName) {
       var childProperties = propertyObject.children[childName]
       var childIDs = api.get(childName)
-      
+
       // Only process ID arrays longer than one (which means there are actually children)
       if (childIDs.length > 1) {
         for (var i = 0; i < childIDs.length; i += 2) {
