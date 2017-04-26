@@ -2,6 +2,7 @@ inlets = 1
 outlets = 1
 autowatch = 1
 
+// Object to store the state of our set
 var LOM = {
   live_app: {}
 }
@@ -49,50 +50,45 @@ function anything () {
 }
 
 function getState () {
+  'use strict'
+
   var track_properties = [
     'color'
   ]
 
-  var track_children = [
-    {
-      base: 'devices',
-      properties: [],
-      children: []
+  var track_children = {
+    devices : {
+      properties: null,
+      children: null
     },
-    {
-      base: 'mixer_device',
-      properties: [],
-      children: []
+    mixer_device: {
+      properties: null,
+      children: null
     },
-    {
-      base: 'clip_slots',
-      properties: [],
-      children: []
+    clip_slots: {
+      properties: null,
+      children: null
     } 
-  ]
+  }
 
   var live_set = {
-    base: 'live_set',
     properties: [
       'clip_trigger_quantization'
     ],
-    children: [
-      {
-        base: 'tracks',
+    children: {
+      tracks: {
         properties: track_properties,
         children: track_children
       },
-      {
-        base: 'return_tracks',
+      return_tracks: {
         properties: track_properties,
         children: track_children
       },
-      {
-        base: 'master_track',
+      master_track: {
         properties: track_properties,
         children: track_children
-      }      
-    ]
+      }
+    }
   }
 
   // Get live_app state
@@ -102,40 +98,42 @@ function getState () {
   LOM['live_app'].bugfix_version = live_app_api.call('get_bugfix_version')
   
   // Get live_set state
-  getAllChildrenState(live_set, '')
+  getAllState('live_set', live_set)
 
   post(JSON.stringify(LOM))
   return JSON.stringify(LOM)
 }
 
-function getAllChildrenState(obj, parentPath) {
-  var apiPath = parentPath ? parentPath + ' ' + obj['base'] : obj['base']
-  var api = new LiveAPI(apiPath)
+function getAllState(pathOrID, propertyObject) {
+ 'use strict'
+
+  var api = new LiveAPI(pathOrID)
   var path = api.unquotedpath.split(' ')
 
-  // Add every property value to LOM
-  obj.properties.forEach(function (prop) {
-    var value = api.get(prop)
-    var propPath = path.slice()
-    propPath.push(prop)
-    createNestedObject(LOM, propPath, value)
-  })
-  
-  // PICKUP: Get children and call this function
-  // Using setPropOnLom
-  obj.children.forEach(function (child) {
-    var apiChildren = api.get(child['base'])
-    properties = child['properties']
-    setPropOnLom(apiChildren, properties)
-    //getAllChildrenState(child, apiPath)  
-  })
-}
+  // If there are properties, and every property value to LOM
+  if (propertyObject.properties) {
+    propertyObject.properties.forEach(function (property) {
+      var value = api.get(property)
+      var propertyPath = path.slice()
 
-function setPropOnLom (IDs, properties) {
-  for (var i = 0; i < IDs.length; i += 2) {
-    var api = new LiveAPI(IDs[i] + ' ' + IDs[i + 1])
-    post(api.path)
-    post()
+      propertyPath.push(property)
+      createNestedObject(LOM, propertyPath, value)
+    })
+  }
+  
+  // If there are children recurse through all children
+  if (propertyObject.children) {
+    Object.keys(propertyObject.children).forEach(function (childName) {
+      var childProperties = propertyObject.children[childName]
+      var childIDs = api.get(childName)
+      
+      // Only process ID arrays longer than one (which means there are actually children)
+      if (childIDs.length > 1) {
+        for (var i = 0; i < childIDs.length; i += 2) {
+          getAllState(childIDs[i] + ' ' + childIDs[i + 1], childProperties) 
+        }
+      }
+    })
   }
 }
 
