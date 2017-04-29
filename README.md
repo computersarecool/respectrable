@@ -4,7 +4,7 @@
 ### Overview
 The point is to create a bridge so that any change to a Live set sends a notification over OSC and any property of a Live set can be changed by sending an OSC message to the Ableton Live API
 
-Respectrable is essentially a Max patch, with a lot of Javascript that facilitates this
+`Respectrable` is essentially a Max patch (with a lot of Javascript) that facilitates this
 
 ### Setup
 The  `ableton` folder has an example Live set with the respectrable patch loaded
@@ -20,7 +20,7 @@ The `front_ends` folder contains example front ends to demo the project
 
 ### API
 - Respectrable sends two types of messages: `channel` and `message`
-	- The `channel` messages are messages for which there is a Max object in the patch (for better performance a limited number of live properties have [live.observers](https://docs.cycling74.com/max6/dynamic/c74_docs.html#live.observer) attached to them - see the following table). 
+	- The `channel` messages are messages are sent when there is a Max object in the patch monitoring a property (for better performance a limited number of live properties have [live.observers](https://docs.cycling74.com/max6/dynamic/c74_docs.html#live.observer) attached to them - see the following table)
 	- The `message` types are sent in response to an API call (see below examples)
 	- Both message types are sent on different ports to the destination(s) specified in `settings.json`
 - After initialization the current value for each observed property on each observed LOM object will be sent in a `channel` message in the following format:
@@ -33,7 +33,7 @@ The `front_ends` folder contains example front ends to demo the project
 	
     e.g. `/live_set/tracks/0 ['output_meter_left', 0.5]`
     
- Any time an observed property changes the current value of that property will be sent in this format
+    Any time an observed property changes the current value of that property will be sent in this format
  
 - To `set` or `get` a property (or to `call` a function) an OSC message should be sent in the same format
 
@@ -47,6 +47,7 @@ The `front_ends` folder contains example front ends to demo the project
 	e.g. `/live_set/tracks/0 ['set', 'color', 0] `
 
 - Helper methods
+
 	Because of the complexity of filling out a client object with individual messages, the helper function `getState` can be called as `/live_set ['get_state', true]`
 	This is the only message that will perform logic on the Max side to return JSON formatted string that is a fairly complete state representation of the LOM
 
