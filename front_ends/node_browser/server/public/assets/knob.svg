@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="svg2" viewBox="0 0 579.85743 569.60867" height="160.75623mm" width="163.64865mm">
+  <defs id="defs4">
+    <linearGradient id="linearGradient6371">
+      <stop offset="0" id="stop6373"/>
+      <stop offset="1" id="stop6375" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient xlink:href="#linearGradient6371" id="radialGradient6377" cx="185.47202" cy="377.83094" fx="185.47202" fy="377.83094" r="111.97905" gradientTransform="matrix(1 0 0 .6018 0 150.458)" gradientUnits="userSpaceOnUse"/>
+    <mask id="mask3" width="100" height="100">
+      <g id="mask-container">
+        <path id="mask-path" stroke-width="15" fill="none" stroke="#fff" d="M75 150a75 75 0 1 0 75-75"/>
+      </g>
+    </mask>
+  </defs>
+  <g id="layer3" transform="translate(-73.493 -42.944)">
+     <g mask="url(#mask3)" transform="translate(11.565 -126.054)" id="layer4">
+      <path id="dialfill" d="M211.42857 680.93363l67.14286-92.85714-64.28572-62.85714-18.57142-78.57143 17.14285-78.57143 82.85715-75.71429 67.14285-7.14285L420 296.64792l57.14286 44.28571 27.14285 48.57143 7.14286 64.28572L500 510.93363l-34.28571 44.28572-18.57143 18.57143 75.71428 98.57142 68.57143-70 35.71429-85.71428 7.14285-88.57143L620 353.79078s-72.85714-117.14286-97.14286-127.14286c-24.28571-10-57.14285-34.28572-57.14285-34.28572l-102.85715-22.85714-82.85714 10-111.42857 61.42857S80 366.64792 84.285714 380.93363c4.285715 14.28572-5.714285 111.42857-5.714285 111.42857l25.714281 78.57143 48.57143 67.14286 58.57143 47.14286z" fill="#f3fc00" fill-rule="evenodd" stroke="#000"/>
+    </g>
+    <path id="rect-mask" fill="url(#radialGradient6377)" fill-rule="evenodd" stroke="#000" d="M73.992973 310.94351h222.9581v133.77486h-222.9581z"/>
+    <g id="layer1" transform="translate(11.565 -121.595)" fill="none" stroke-width="15">
+      <circle r="277.14285" cy="449.50507" cx="357.14285" id="outerRim" fill-rule="evenodd" stroke="#00f000"/>
+      <circle r="158.57143" cy="445.21933" cx="355.71429" id="path4153" stroke="#00f000"/>
+      <path id="path4155" d="M285.71429 586.64792L211.42857 692.3622" fill-rule="evenodd" stroke="#0f0"/>
+      <path id="path4157" d="M448.57143 575.21935l82.85714 97.14285" fill-rule="evenodd" stroke="#0f0"/>
+    </g>
+  </g>
+</svg>

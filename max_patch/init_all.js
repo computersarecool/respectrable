@@ -1,11 +1,11 @@
 autowatch = 1
 
-// This function should be called by the live.thisdevice in Max when the Live API is ready
+// This function is called by the live.thisdevice in Max when the Live API is ready
+// Remove and recreate the live_set patch
 function anything () {
   'use strict'
-
+ 
   if (messagename === 'bang') {
-    // Remove and create the live_set patch
     var liveSetPatch = this.patcher.getnamed('live_set')
     if (liveSetPatch) {
       this.patcher.remove(liveSetPatch);

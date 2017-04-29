@@ -1,0 +1,493 @@
+{
+  "ClipSlot": {
+    "properties": [
+      {
+        "will_record_on_start": "bool"
+      }, 
+      {
+        "playing_status": "int"
+      }, 
+      {
+        "controls_other_clips": "bool"
+      }, 
+      {
+        "has_stop_button": "bool"
+      }, 
+      {
+        "has_clip": "bool"
+      }, 
+      {
+        "is_recording": "bool"
+      }, 
+      {
+        "is_triggered": "bool"
+      }, 
+      {
+        "is_playing": "bool"
+      }, 
+      {
+        "color": "NoneType"
+      }
+    ], 
+    "functions": [
+      "create_clip", 
+      "delete_clip", 
+      "fire", 
+      "set_fire_button_state", 
+      "stop"
+    ]
+  }, 
+  "MixerDevice": {
+    "properties": [
+      {
+        "crossfade_assign": "int"
+      }
+    ],
+    "functions": []
+  }, 
+  "Device": {
+    "properties": [
+      {
+        "can_have_drum_pads": "bool"
+      }, 
+      {
+        "name": "unicode"
+      }, 
+      {
+        "class_name": "unicode"
+      }, 
+      {
+        "can_have_chains": "bool"
+      }, 
+      {
+        "type": "DeviceType"
+      }, 
+      {
+        "class_display_name": "unicode"
+      }
+    ], 
+    "functions": [
+      "get_bank_count", 
+      "get_bank_name", 
+      "get_bank_parameters", 
+      "store_chosen_bank"
+    ]
+  }, 
+  "Clip": {
+    "properties": [
+      {
+        "is_overdubbing": "bool"
+      }, 
+      {
+        "start_time": "float"
+      }, 
+      {
+        "name": "unicode"
+      }, 
+      {
+        "gain": "float"
+      }, 
+      {
+        "signature_numerator": "int"
+      }, 
+      {
+        "is_playing": "bool"
+      }, 
+      {
+        "warping": "bool"
+      }, 
+      {
+        "loop_start": "float"
+      }, 
+      {
+        "end_marker": "float"
+      }, 
+      {
+        "ram_mode": "bool"
+      }, 
+      {
+        "file_path": "unicode"
+      }, 
+      {
+        "pitch_coarse": "int"
+      }, 
+      {
+        "will_record_on_start": "bool"
+      }, 
+      {
+        "is_audio_clip": "bool"
+      }, 
+      {
+        "has_envelopes": "bool"
+      }, 
+      {
+        "loop_end": "float"
+      }, 
+      {
+        "warp_mode": "int"
+      }, 
+      {
+        "gain_display_string": "unicode"
+      }, 
+      {
+        "playing_position": "float"
+      }, 
+      {
+        "looping": "bool"
+      }, 
+      {
+        "color": "int"
+      }, 
+      {
+        "start_marker": "float"
+      }, 
+      {
+        "signature_denominator": "int"
+      }, 
+      {
+        "is_arrangement_clip": "bool"
+      }, 
+      {
+        "length": "float"
+      }, 
+      {
+        "muted": "bool"
+      }, 
+      {
+        "is_recording": "bool"
+      }, 
+      {
+        "available_warp_modes": "IntVector"
+      }, 
+      {
+        "is_midi_clip": "bool"
+      }, 
+      {
+        "pitch_fine": "float"
+      }, 
+      {
+        "is_triggered": "bool"
+      }
+    ], 
+    "functions": [
+      "clear_all_envelopes", 
+      "clear_envelope", 
+      "deselect_all_notes", 
+      "duplicate_loop", 
+      "fire", 
+      "get_notes", 
+      "get_selected_notes", 
+      "move_playing_pos", 
+      "quantize", 
+      "quantize_pitch", 
+      "remove_notes", 
+      "replace_selected_notes", 
+      "scrub", 
+      "select_all_notes", 
+      "set_fire_button_state", 
+      "set_notes", 
+      "stop", 
+      "stop_scrub"
+    ]
+  }, 
+  "View": {
+    "properties": [
+      {
+        "follow_song": "bool"
+      }, 
+      {
+        "draw_mode": "bool"
+      }
+    ], 
+    "functions": [
+      "select_device"
+    ]
+  }, 
+  "Track": {
+    "properties": [
+      {
+        "is_part_of_selection": "bool"
+      }, 
+      {
+        "can_be_armed": "bool"
+      }, 
+      {
+        "current_input_sub_routing": "unicode"
+      }, 
+      {
+        "can_be_frozen": "bool"
+      }, 
+      {
+        "current_input_routing": "unicode"
+      }, 
+      {
+        "output_sub_routings": "StringVector"
+      }, 
+      {
+        "is_foldable": "bool"
+      }, 
+      {
+        "name": "unicode"
+      }, 
+      {
+        "has_midi_output": "bool"
+      }, 
+      {
+        "output_routings": "StringVector"
+      }, 
+      {
+        "input_sub_routings": "StringVector"
+      }, 
+      {
+        "is_visible": "bool"
+      }, 
+      {
+        "output_meter_left": "float"
+      }, 
+      {
+        "output_meter_level": "float"
+      }, 
+      {
+        "input_meter_level": "float"
+      }, 
+      {
+        "has_audio_output": "bool"
+      }, 
+      {
+        "input_routings": "StringVector"
+      }, 
+      {
+        "current_output_sub_routing": "unicode"
+      }, 
+      {
+        "input_meter_right": "float"
+      }, 
+      {
+        "current_output_routing": "unicode"
+      }, 
+      {
+        "input_meter_left": "float"
+      }, 
+      {
+        "has_audio_input": "bool"
+      }, 
+      {
+        "color": "int"
+      }, 
+      {
+        "output_meter_right": "float"
+      }, 
+      {
+        "is_frozen": "bool"
+      }, 
+      {
+        "has_midi_input": "bool"
+      }
+    ], 
+    "functions": [
+      "delete_device", 
+      "duplicate_clip_slot", 
+      "jump_in_running_session_clip", 
+      "stop_all_clips"
+    ]
+  }, 
+  "Scene": {
+    "properties": [
+      {
+        "name": "unicode"
+      }, 
+      {
+        "is_triggered": "bool"
+      }, 
+      {
+        "is_empty": "bool"
+      }, 
+      {
+        "tempo": "float"
+      }, 
+      {
+        "color": "int"
+      }
+    ], 
+    "functions": [
+      "fire", 
+      "fire_as_selected", 
+      "set_fire_button_state"
+    ]
+  }, 
+  "Song": {
+    "properties": [
+      {
+        "current_song_time": "float"
+      }, 
+      {
+        "loop": "bool"
+      }, 
+      {
+        "groove_amount": "float"
+      }, 
+      {
+        "can_jump_to_next_cue": "bool"
+      }, 
+      {
+        "signature_numerator": "int"
+      }, 
+      {
+        "is_playing": "bool"
+      }, 
+      {
+        "nudge_down": "bool"
+      }, 
+      {
+        "loop_start": "float"
+      }, 
+      {
+        "last_event_time": "float"
+      }, 
+      {
+        "can_redo": "bool"
+      }, 
+      {
+        "loop_length": "float"
+      }, 
+      {
+        "session_record_status": "int"
+      }, 
+      {
+        "nudge_up": "bool"
+      }, 
+      {
+        "arrangement_overdub": "bool"
+      }, 
+      {
+        "signature_denominator": "int"
+      }, 
+      {
+        "exclusive_arm": "bool"
+      }, 
+      {
+        "overdub": "bool"
+      }, 
+      {
+        "session_record": "bool"
+      }, 
+      {
+        "record_mode": "bool"
+      }, 
+      {
+        "punch_out": "bool"
+      }, 
+      {
+        "session_automation_record": "bool"
+      }, 
+      {
+        "swing_amount": "float"
+      }, 
+      {
+        "back_to_arranger": "bool"
+      }, 
+      {
+        "song_length": "float"
+      }, 
+      {
+        "clip_trigger_quantization": "int"
+      }, 
+      {
+        "appointed_device": "Device"
+      }, 
+      {
+        "exclusive_solo": "bool"
+      }, 
+      {
+        "tempo": "float"
+      }, 
+      {
+        "select_on_launch": "bool"
+      }, 
+      {
+        "can_jump_to_prev_cue": "bool"
+      }, 
+      {
+        "re_enable_automation_enabled": "bool"
+      }, 
+      {
+        "metronome": "bool"
+      }, 
+      {
+        "midi_recording_quantization": "int"
+      }, 
+      {
+        "can_undo": "bool"
+      }, 
+      {
+        "punch_in": "bool"
+      }
+    ], 
+    "functions": [
+      "capture_and_insert_scene", 
+      "continue_playing", 
+      "create_audio_track", 
+      "create_midi_track", 
+      "create_return_track", 
+      "create_scene", 
+      "delete_scene", 
+      "delete_track", 
+      "duplicate_scene", 
+      "duplicate_track", 
+      "get_beats_loop_length", 
+      "get_beats_loop_start", 
+      "get_current_beats_song_time", 
+      "get_current_smpte_song_time", 
+      "is_cue_point_selected", 
+      "jump_by", 
+      "jump_to_next_cue", 
+      "jump_to_prev_cue", 
+      "play_selection", 
+      "re_enable_automation", 
+      "redo", 
+      "scrub_by", 
+      "set_or_delete_cue", 
+      "start_playing", 
+      "stop_all_clips", 
+      "stop_playing", 
+      "tap_tempo", 
+      "trigger_session_record", 
+      "undo"
+    ]
+  }, 
+  "DeviceParameter": {
+    "properties": [
+      {
+        "min": "float"
+      }, 
+      {
+        "name": "unicode"
+      }, 
+      {
+        "automation_state": "int"
+      }, 
+      {
+        "default_value": "float"
+      }, 
+      {
+        "is_quantized": "bool"
+      }, 
+      {
+        "value": "float"
+      }, 
+      {
+        "is_enabled": "bool"
+      }, 
+      {
+        "max": "float"
+      }, 
+      {
+        "original_name": "unicode"
+      }
+    ], 
+    "functions": [
+      "re_enable_automation", 
+      "str_for_value"
+    ]
+  }
+}
