@@ -2,7 +2,7 @@
 *Bi-directional communication with Ableton Live via Cycling '74's Max*
 
 ### Overview
-The point is to create a bridge so that any change to a Live set sends a notification over OSC and any property of a Live set can be changed by sending an OSC message
+The point is to create a bridge so that any change to a Live set sends a notification over OSC and any property of a Live set can be changed by sending an OSC message to the Ableton Live API via a Max patch
 
 Respectrable is essentially a Max patch, with a lot of Javascript that facilitates this
 
