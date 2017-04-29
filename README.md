@@ -11,7 +11,7 @@ The  `ableton` folder has an example Live set with the respectrable patch loaded
 
 The `max_patch` contains everything neccesary for the Max / Ableton side
 
-The `front_ends` folder contains example browser and TouchDesigner front ends to demo the project
+The `front_ends` folder contains example front ends to demo the project
 
 ### Instructions
 - Make sure to add this folder to the Max search path
@@ -23,9 +23,9 @@ The `front_ends` folder contains example browser and TouchDesigner front ends to
 	- The `channel` messages are messages for which there is a Max object in the patch (for better performance a limited number of live properties have [live.observers](https://docs.cycling74.com/max6/dynamic/c74_docs.html#live.observer) attached to them - see the following table). 
 	- The `message` types are sent in response to an API call (see below examples)
 	- Both message types are sent on different ports to the destination(s) specified in `settings.json`
-- After initialization the current value for each observed property on each observed LOM object will be sent via OSC in the following format:
+- After initialization the current value for each observed property on each observed LOM object will be sent in a `channel` message in the following format:
 	
-    `/canonical_path property value`
+    `/canonical_path [property, value]`
     
 	- `canonical_path` is the LOM canonical path with spaces replaced by `/`
 	- `property` is the first argument and is the `Name` of the property that is being observed
@@ -33,11 +33,11 @@ The `front_ends` folder contains example browser and TouchDesigner front ends to
 	
     e.g. `/live_set/tracks/0 ['output_meter_left', 0.5]`
     
- Any changes made to the set from an OSC message or directly in Live (if it is a parameter with a `live.observer` will send the updated value in the same format)
+ Any time an observed property changes the current value of that property will be sent in this format
  
 - To `set` or `get` a property (or to `call` a function) an OSC message should be sent in the same format
 
-   `/canonical_path messageType property (value)`
+   `/canonical_path [messageType property (value)]`
 
 	- `canonical_path` is the LOM Canonical path
 	- `messageType` is either `set` or `get` or `call` (if a function is being called) or `property` to get a LiveAPI property (i.e. `id`, `path` etc. which are sligtly different than other properties - see the LOM for details)
