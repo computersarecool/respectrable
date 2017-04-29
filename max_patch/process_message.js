@@ -4,8 +4,8 @@ inlets = 1
 outlets = 1
 autowatch = 1
 
-// All of the properties to be queried and the functions to query them are here
-var stateManagement = require('state_management').stateManagement
+// This is a function that will get a preset amount of the live set state
+var getState = require('state_management').getState
 
 // Object to store the state of our set
 var LOM
@@ -43,7 +43,7 @@ function anything () {
       data = apiObj[property]
       break
     case 'get_state':
-      LOM = stateManagement.getState()
+      LOM = getState()
       data = JSON.stringify(LOM)
       break
   }
