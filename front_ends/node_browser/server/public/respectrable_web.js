@@ -1,3 +1,7 @@
+/* global Primus */
+
+'use strict'
+
 // This code sends data to the node / UDP proxy via websockets
 window.addEventListener('load', () => {
   // State holder
@@ -15,17 +19,23 @@ window.addEventListener('load', () => {
   }
 
   // Set or get values in Max
-  function getOrSet (address, args, isChannel = false) {
-    primus.emit('toMax', {
+  function getSetMessage (address, args) {
+    primus.emit('toMaxMessage', {
       address,
-      args,
-      isChannel
+      args
+    })
+  }
+
+  function getSetChannel (address, args) {
+    primus.emit('toMaxChannel', {
+      address,
+      args
     })
   }
 
   // This starts the state collection
   function getState () {
-    getOrSet('live_set', ['get_state', true])
+    getSetMessage('live_set', ['get_state', true])
   }
 
   // Route packet to correct function
@@ -35,8 +45,8 @@ window.addEventListener('load', () => {
     const property = packet.args.shift()
     const value = packet.args
 
-    if (messageType == 'get_state') {
-      state = JSON.parse(value[0])
+    if (messageType === 'get_state') {
+      const state = JSON.parse(value[0])
       console.log(state)
     } else {
       console.log(address, messageType, property, value)
@@ -264,7 +274,7 @@ window.addEventListener('load', () => {
 
   // Debug - click to display LOM
   document.addEventListener('click', () => {
-  	getState()
+    getState()
   })
 
 }, false)

@@ -1,11 +1,12 @@
-// Helper function to make ports and add all of their functionality
+// This exports a constructor functin for OSC UDP ports
+
 const osc = require('osc')
 
 module.exports = (primusSocket, portOptions) => {
   const {
     localAddress,
     localPort,
-    destinationAddress, 
+    destinationAddress,
     destinationPort,
     name
   } = portOptions
@@ -15,13 +16,10 @@ module.exports = (primusSocket, portOptions) => {
     localPort
   })
 
-  port.sendOSC = (address, args) => {
-    // OSC format before sending
-    address = '/' + address.split(' ').join('/')
-    port.send({
-      address,
-      args
-    }, destinationAddress, destinationPort)
+  port.sendOSC = packet => {
+    // OSC format address before sending
+    packet.address = '/' + packet.address.split(' ').join('/')
+    port.send(packet, destinationAddress, destinationPort)
   }
 
   port.on('open', () => {
@@ -35,10 +33,12 @@ module.exports = (primusSocket, portOptions) => {
   port.on('error', err => {
     console.log('There is an error', err)
   })
-  
-  // Remove the OSC formatting when message is received
-  port.on('message',  packet => {
+
+  // This is where an incoming message is received by the OSC port
+  port.on('message', packet => {
     let {args, address} = packet
+
+    // Undo the OSC formatting and send via the websocket
     address = address.split('/')
     address.shift()
     address = address.join(' ')

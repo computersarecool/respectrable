@@ -60,7 +60,8 @@ var tracks = {
   properties: [
     'color',
     'has_audio_input',
-    'output_meter_level',
+    'output_meter_left',
+    'output_meter_right',
     'mute',
     'name',
     'solo',
