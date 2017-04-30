@@ -25,7 +25,7 @@ The `front_ends` folder contains example front ends to demo the project
 	- Both message types are sent on different ports to the destination(s) specified in `settings.json`
 - After initialization the current value for each observed property on each observed LOM object will be sent in a `channel` message in the following format:
 	
-    `/canonical_path observe [property, value]`
+    `/canonical_path ['observe', property, value]`
     
 	- `canonical_path` is the LOM canonical path with spaces replaced by `/`
 	- `observe` is just the string `observe` (to keep message formats the same)
