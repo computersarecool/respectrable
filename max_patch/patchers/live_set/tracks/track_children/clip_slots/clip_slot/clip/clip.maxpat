@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 2109.0, 268.0, 125.0, 33.0 ],
+		"rect" : [ -1846.0, 266.0, 125.0, 33.0 ],
 		"bgcolor" : [ 1.0, 1.0, 1.0, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -262,9 +262,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 994.0, 338.0, 270.0, 22.0 ],
+					"patching_rect" : [ 994.0, 338.0, 316.0, 22.0 ],
 					"style" : "",
-					"text" : "sprintf #1/color %d"
+					"text" : "sprintf #1 observe color %d"
 				}
 
 			}

@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 1980.0, 250.0, 1200.0, 591.0 ],
+		"rect" : [ -1844.0, 252.0, 1200.0, 591.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -43,9 +43,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 999.0, 125.0, 168.0, 22.0 ],
+					"patching_rect" : [ 1032.0, 125.0, 214.0, 22.0 ],
 					"style" : "",
-					"text" : "sprintf #1/is_playing %d"
+					"text" : "sprintf #1 observe is_playing %d"
 				}
 
 			}
@@ -56,7 +56,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 999.0, 46.0, 111.0, 22.0 ],
+					"patching_rect" : [ 1032.0, 46.0, 111.0, 22.0 ],
 					"style" : "",
 					"text" : "property is_playing"
 				}
@@ -69,7 +69,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 999.0, 90.0, 79.0, 22.0 ],
+					"patching_rect" : [ 1032.0, 90.0, 79.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"_persistence" : 1
 					}
@@ -86,9 +86,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 824.0, 125.0, 145.0, 22.0 ],
+					"patching_rect" : [ 824.0, 125.0, 191.0, 22.0 ],
 					"style" : "",
-					"text" : "sprintf #1/tempo %f"
+					"text" : "sprintf #1 observe tempo %f"
 				}
 
 			}
@@ -129,9 +129,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 534.0, 125.0, 245.0, 22.0 ],
+					"patching_rect" : [ 534.0, 125.0, 291.0, 22.0 ],
 					"style" : "",
-					"text" : "sprintf #1/clip_trigger_quantization %d"
+					"text" : "sprintf #1 observe clip_trigger_quantization %d"
 				}
 
 			}
@@ -198,9 +198,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 134.0, 319.216217, 109.0, 22.0 ],
+					"patching_rect" : [ 134.0, 319.216217, 157.0, 22.0 ],
 					"style" : "",
-					"text" : "sprintf #1/%s"
+					"text" : "sprintf #1 observe %s"
 				}
 
 			}
@@ -371,6 +371,29 @@
 				}
 
 			}
+, 			{
+				"box" : 				{
+					"args" : [ "/live_set/master_track" ],
+					"bgmode" : 0,
+					"border" : 1,
+					"clickthrough" : 0,
+					"enablehscroll" : 0,
+					"enablevscroll" : 0,
+					"id" : "obj-16",
+					"lockeddragscroll" : 0,
+					"maxclass" : "bpatcher",
+					"name" : "track.maxpat",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"offset" : [ 0.0, 0.0 ],
+					"patching_rect" : [ 1309.0, 166.0, 121.0, 591.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 897.0, 0.0, 121.0, 591.0 ],
+					"varname" : "master_track",
+					"viewvisibility" : 1
+				}
+
+			}
  ],
 		"lines" : [ 			{
 				"patchline" : 				{
@@ -490,7 +513,7 @@
 					"destination" : [ "obj-29", 1 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"midpoints" : [ 557.5, 35.0, 1118.0, 35.0, 1118.0, 73.0, 1070.0, 73.0, 1070.0, 84.0, 1068.5, 84.0 ],
+					"midpoints" : [ 557.5, 23.0, 810.0, 23.0, 810.0, 23.0, 1101.5, 23.0 ],
 					"source" : [ "obj-20", 1 ]
 				}
 
@@ -661,6 +684,15 @@
 					"hidden" : 0,
 					"midpoints" : [ 143.5, 164.0, 143.5, 164.0 ],
 					"source" : [ "obj-8", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-16", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-8", 3 ]
 				}
 
 			}

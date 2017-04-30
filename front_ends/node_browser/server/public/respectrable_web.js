@@ -43,6 +43,9 @@ function initialize () {
       LOM = JSON.parse(value[0])
       console.log(LOM)
     } else {
+      if (messageType != 'observe') {
+        console.log('WARNING')
+      }
       console.log(address, messageType, property, value)
     }
 

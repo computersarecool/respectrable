@@ -25,19 +25,20 @@ The `front_ends` folder contains example front ends to demo the project
 	- Both message types are sent on different ports to the destination(s) specified in `settings.json`
 - After initialization the current value for each observed property on each observed LOM object will be sent in a `channel` message in the following format:
 	
-    `/canonical_path [property, value]`
+    `/canonical_path observe [property, value]`
     
 	- `canonical_path` is the LOM canonical path with spaces replaced by `/`
+	- `observe` is just the string `observe` (to keep message formats the same)
 	- `property` is the first argument and is the `Name` of the property that is being observed
 	- `value` is the second argument
 	
-    e.g. `/live_set/tracks/0 ['output_meter_left', 0.5]`
+    e.g. `/live_set/tracks/0 ['observe', 'output_meter_left', 0.5]`
     
     Any time an observed property changes the current value of that property will be sent in this format
  
 - To `set` or `get` a property (or to `call` a function) an OSC message should be sent in a similar format
 
-   `/canonical_path [messageType property (value)]`
+   `/canonical_path [messageType, property, (value)]`
 
 	- `canonical_path` is the LOM Canonical path
 	- `messageType` is either `set` or `get` or `call` (if a function is being called) or `property` to get a LiveAPI property (i.e. `id`, `path` etc. which are sligtly different than other properties - see the LOM for details)
