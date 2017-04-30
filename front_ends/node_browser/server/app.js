@@ -18,14 +18,14 @@ let primus = new Primus(server, {
 // Use emit plugin so we can use 'toMax' events
 primus.plugin('emit', require('primus-emit'))
 
-// Primus (websocket) connection made with browser - make OSC ports
+// Primus (websocket) connection (spark) made with browser - make OSC ports
 primus.on('connection', spark => {
   channelPort = makeOSCPort(spark, channelPortOptions)
   messagePort = makeOSCPort(spark, messagePortOptions)
 
   // Websocket events received from browser - forward to Max
-  spark.on('toMaxChannel', packet => channelPort.sendOSC(packet))
-  spark.on('toMaxMessage', packet => messagePort.sendOSC(packet))
+  spark.on('channel', packet => channelPort.sendOSC(packet))
+  spark.on('message', packet => messagePort.sendOSC(packet))
 })
 
 // Close OSC ports on disconnection

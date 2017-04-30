@@ -35,7 +35,7 @@ The `front_ends` folder contains example front ends to demo the project
     
     Any time an observed property changes the current value of that property will be sent in this format
  
-- To `set` or `get` a property (or to `call` a function) an OSC message should be sent in the same format
+- To `set` or `get` a property (or to `call` a function) an OSC message should be sent in a similar format
 
    `/canonical_path [messageType property (value)]`
 

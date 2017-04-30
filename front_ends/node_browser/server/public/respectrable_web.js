@@ -2,8 +2,10 @@
 
 'use strict'
 
+window.addEventListener('load', initialize, false)
+
 // This code sends data to the node / UDP proxy via websockets
-window.addEventListener('load', () => {
+function initialize () {
   // State holder
   let LOM
 
@@ -12,22 +14,11 @@ window.addEventListener('load', () => {
   primus.on('open', getState)
   primus.on('fromMax', routePacket)
 
-  function formatIDs (arr) {
-    return arr.filter(elem => {
-      return elem != 'id'
-    })
-  }
+  // OSC format address then set or get values in Max
+  function getOrSet (messageType, address, args) {
+    address = '/' + address.split(' ').join('/')
 
-  // Set or get values in Max
-  function getSetMessage (address, args) {
-    primus.emit('toMaxMessage', {
-      address,
-      args
-    })
-  }
-
-  function getSetChannel (address, args) {
-    primus.emit('toMaxChannel', {
+    primus.emit(messageType, {
       address,
       args
     })
@@ -35,22 +26,32 @@ window.addEventListener('load', () => {
 
   // This starts the state collection
   function getState () {
-    getSetMessage('live_set', ['get_state', true])
+    getOrSet('message', 'live_set', ['get_state', true])
   }
 
   // Route packet to correct function
   function routePacket (packet) {
-    const address = packet.address.split(' ')
+    let address = packet.address.split('/')
+    address.shift()
+    address = address.join(' ')
+
     const messageType = packet.args.shift()
     const property = packet.args.shift()
     const value = packet.args
 
     if (messageType === 'get_state') {
-      const state = JSON.parse(value[0])
-      console.log(state)
+      LOM = JSON.parse(value[0])
+      console.log(LOM)
     } else {
       console.log(address, messageType, property, value)
     }
+
+    //  function formatIDs (arr) {
+    //    return arr.filter(elem => {
+    //      return elem != 'id'
+    //    })
+    //  }
+
     // // Live set or child update
     // if (address[0] === 'live_set') {
     //   // live_set direct update
@@ -276,5 +277,4 @@ window.addEventListener('load', () => {
   document.addEventListener('click', () => {
     getState()
   })
-
-}, false)
+}
