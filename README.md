@@ -15,7 +15,7 @@ The `front_ends` folder contains example front ends to demo the project
 
 ### Instructions
 - Make sure to add this folder to the Max search path
-- Take note of the networking information in `settings.json` - this contains the ports on which to receive and the hosts and ports to which data is sent
+- Take note of the networking information in `settings.json` - this contains the hosts and ports to send and receive data
 - Add `spectra_max.amxd` to the master track on a Live set
 
 ### API
@@ -52,7 +52,7 @@ The `front_ends` folder contains example front ends to demo the project
 	Because of the complexity of filling out a client object with individual messages, the helper function `getState` can be called as `/live_set ['get_state', true]`
 	This is the only message that will perform logic on the Max side to return JSON formatted string that is a fairly complete state representation of the LOM
 
-#### Properties Observered with live.observers	
+#### Properties observed with live.observers	
 
 | live_set                          | tracks             | active_clip      | devices    | mixer_device            | clip  |
 |-----------------------------------|--------------------|------------------|------------|-------------------------|-------|
