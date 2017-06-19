@@ -78,4 +78,7 @@ The `max_path` folder contains the main `spectra_max` patcha and the specific Ja
 - [Live Object Model](https://docs.cycling74.com/max7/vignettes/live_object_model) (essential to understand)
 
 ### License
-(c) 2017 Willy Nolan [MIT License](https://en.wikipedia.org/wiki/MIT_License)
+
+(c) 2017 Willy Nolan
+
+[MIT License](https://en.wikipedia.org/wiki/MIT_License)
