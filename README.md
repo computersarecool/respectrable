@@ -79,6 +79,6 @@ The `max_path` folder contains the main `spectra_max` patcha and the specific Ja
 
 ### License
 
-(c) 2017 Willy Nolan
+:copyright: Willy Nolan 2017
 
 [MIT License](https://en.wikipedia.org/wiki/MIT_License)
