@@ -4,7 +4,7 @@
 ### Overview
 The point is to create system where any change to a Live set sends an OSC notification and any property of a Live set can be changed by sending an OSC message to the Ableton Live API
 
-`Respectrable` is essentially a Max patch (with a lot of Javascript) that facilitates this
+Respectrable is essentially a Max patch (with a lot of Javascript) that facilitates this
 
 ### Setup
 The  `ableton` folder has an example Live set with the respectrable patch loaded
