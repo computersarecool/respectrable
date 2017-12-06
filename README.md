@@ -47,10 +47,10 @@ The `front_ends` folder contains example front ends to demo the project.
 
 	e.g. `/live_set/tracks/0 ['set', 'color', 0] `
 
-- Helper methods
+- A helper method
 
 	Because of the complexity of filling out a client object with individual messages, the helper function `getState` can be called as `/live_set ['get_state', true]`
-	This is the only message that will perform logic on the Max side to return JSON formatted string that is a fairly complete state representation of the LOM
+	This is the only message that will perform logic on the Max side to return a JSON formatted string that is a fairly complete state representation of the LOM
 
 #### Properties observed with live.observers	
 
