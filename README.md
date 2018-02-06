@@ -1,21 +1,26 @@
 # Respectrable
 *Bi-directional communication with Ableton Live via Cycling '74's Max*
 
-### Overview
-The point is to create system where any change to a Live set sends an OSC notification and any property of a Live set can be changed by sending an OSC message to the Ableton Live API.
+## What this repo does:
+The point is to create program where any change to a Live set sends an OSC notification and any property of a Live set can be changed by sending an OSC message to the Ableton Live API.
 
 Respectrable is essentially a Max patch (with a lot of Javascript) that facilitates this.
 
-### Setup
+## Tested on:
+- Windows and Mac computers running Ableton Live 9
+
+## To use:
 The  `ableton` folder has an example Live set with the respectrable patch loaded.
 
 The `max_patch` contains everything neccesary for the Max / Ableton side.
 
 The `front_ends` folder contains example front ends to demo the project.
 
-### Instructions
+### Usage notes:
 - Make sure to add this folder to the Max search path
+
 - Take note of the networking information in `settings.json` - this contains the hosts and ports to send and receive data
+
 - Add `spectra_max.amxd` to the master track on a Live set
 
 ### API
