@@ -77,9 +77,9 @@ Respectrable is a Max for Live device that facilitates this. In the rest of this
 #### Properties observed with live.observers	
 | live_set                     | tracks               | active_clip        | devices      | mixer_device              | clip    |
 |------------------------------|----------------------|--------------------|--------------|---------------------------|---------|
-|       | `output_meter_right` |  `length`          | `parameters` | `panning`                 | `color` |
-| `tempo`                      | `output_meter_left`  | `playing_position` | `volume`     |                           |         |
-| `clip_trigger_quantization`  | `color`              |                    |              | `track_activator`         |         |
+| `tempo`                      | `output_meter_right` |  `length`          | `parameters` | `panning`                 | `color` |
+| `clip_trigger_quantization`  | `output_meter_left`  | `playing_position` | `volume`     | `track_activator`         |         |
+|                              | `color`              |                    |              |                           |         |
 |                              | `playing_slot_index` |                    |              |                           |         |
 |                              | `solo`               |                    |              |                           |         |
 
