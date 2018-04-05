@@ -2,7 +2,7 @@
 *Bi-directional communication with Ableton Live via Cycling '74's Max*
 
 ## Description
-The point is to create a program where any property of a Live set can be changed by sending an [OSC](http://opensoundcontrol.org/introduction-osc) message to the Ableton Live API and any change to the Live set sends out an OSC notification.
+The point is to create a system where any property of a Live set can be changed by sending an [OSC](http://opensoundcontrol.org/introduction-osc) message to the Ableton Live API and any change to that Live set sends out an OSC notification.
 
 In this way a Live set can control -- or be controlled by -- any interface that uses OSC.
 
