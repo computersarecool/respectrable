@@ -57,7 +57,7 @@ Respectrable is a Max for Live device that facilitates this. In the rest of this
 
 	e.g. `/live_set/tracks/0 ['set', 'color', 0]` will return `/live_set/tracks/0 ["set" "color" 0]`
     
-    e.g. `/live_set/tracks/0 [get, 'color']` will return `/live_set/tracks/0 ["get" "color" 16149507]` (depending on the color of track 1)
+    e.g. `/live_set/tracks/0 [get, 'color']` will return `/live_set/tracks/0 ["get" "color" 16149507]` (where `16149507` depends on the color of track 0)
     
   - Responses to this message will be in the same format and will be sent to the `fromMaxMessage` port
 
