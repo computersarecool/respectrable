@@ -2,7 +2,7 @@
 *Bi-directional communication with Ableton Live via Max for Live*
 
 ## Description
-The point is to create a program where any property of a Live set can be changed by sending an [OSC](http://opensoundcontrol.org/introduction-osc) message to the Ableton Live API and any change to the Live set sends out an OSC notification.
+The point is to create a system where any property of a Live set can be changed by sending an [OSC](http://opensoundcontrol.org/introduction-osc) message to the Ableton Live API and any change to that Live set sends out an OSC notification.
 
 In this way a Live set can control -- or be controlled by -- any interface that uses OSC.
 
@@ -54,6 +54,7 @@ Respectrable is a Max for Live device that facilitates this. In the rest of this
 	- `property` is the second OSC argument and is either the name of the property that is being set or queried or the name of the function to call (again do not confuse these with a LiveAPI property)
 	- `value` is the third OSC argument and should only be included in a `set` message in which case it is the value to set
 
+
 	Examples:
 	- `/live_set/tracks/0 ['set', 'color', 0]` will return `/live_set/tracks/0 ["set" "color" 0]`
   - `/live_set/tracks/0 [get, 'color']` will return `/live_set/tracks/0 ["get" "color" 16149507]` (where `16149507` is a number depending on the color of the first track)
@@ -67,7 +68,6 @@ Respectrable is a Max for Live device that facilitates this. In the rest of this
 	Examples:
 - `/live_set/tracks/0/mixer_device/volume/set/value .5`
 
-
 ##### Helper method
 
 	Because of the complexity of creating an object on the client side from individual messages, the helper function `getState` can be called as `/live_set ['get_state', true]`
@@ -77,9 +77,9 @@ Respectrable is a Max for Live device that facilitates this. In the rest of this
 #### Properties observed with live.observers	
 | live_set                     | tracks               | active_clip        | devices      | mixer_device              | clip    |
 |------------------------------|----------------------|--------------------|--------------|---------------------------|---------|
-| 4 EQ Bands (a custom object) | `output_meter_right` |  `length`          | `parameters` | `panning`                 | `color` |
-| `tempo`                      | `output_meter_left`  | `playing_position` | `volume`     |                           |         |
-| `clip_trigger_quantization`  | `color`              |                    |              | `track_activator` (value) |         |
+| `tempo`                      | `output_meter_right` |  `length`          | `parameters` | `panning`                 | `color` |
+| `clip_trigger_quantization`  | `output_meter_left`  | `playing_position` | `volume`     | `track_activator`         |         |
+|                              | `color`              |                    |              |                           |         |
 |                              | `playing_slot_index` |                    |              |                           |         |
 |                              | `solo`               |                    |              |                           |         |
 
