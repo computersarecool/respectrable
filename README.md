@@ -83,6 +83,7 @@ Respectrable is a Max for Live device that facilitates this. In the rest of this
 |                              | `playing_slot_index` |                    |              |                           |         |
 |                              | `solo`               |                    |              |                           |         |
 
+
 #### Minor Notes
 The Live API returns values as a single element array. Respectrable does not change this so to get the value (what you probably want) access the first element in the array.
 
