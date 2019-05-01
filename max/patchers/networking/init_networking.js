@@ -1,6 +1,6 @@
 autowatch = 1
 var settings
-var settingsFilePath = '..\\..\\..\\..\\settings.json'
+var settingsFilePath = '..\\..\\..\\settings.json'
 
 // This function is called by the live.thisdevice in Max when the Live API is ready
 function anything () {

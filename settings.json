@@ -20,8 +20,6 @@
     },
     "fromMaxMessage": {
       "port": 7030
-    },
-    "mainAddress": "127.0.0.1",
-    "nodeHTTPPort": 8000
+    }
   }
 }
