@@ -69,10 +69,9 @@ Respectrable is a Max for Live device that facilitates this. In the rest of this
 - `/live_set/tracks/0/mixer_device/volume/set/value .5`
 
 ##### Helper method
+Because of the complexity of creating an object on the client side from individual messages, the helper function `getState` can be called as `/live_set ['get_state', true]`
 
-	Because of the complexity of creating an object on the client side from individual messages, the helper function `getState` can be called as `/live_set ['get_state', true]`
-    
-	This is the only message that performs logic on the Max side to return a JSON formatted string that is a fairly complete state representation of the state of the Live set
+This is the only message that performs logic on the Max side to return a JSON formatted string that is a fairly complete state representation of the state of the Live set
 
 #### Properties observed with live.observers	
 | live_set                     | tracks               | active_clip        | devices      | mixer_device              | clip    |
