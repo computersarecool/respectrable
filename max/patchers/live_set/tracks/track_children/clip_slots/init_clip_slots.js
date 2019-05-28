@@ -1,7 +1,16 @@
 autowatch = 1
+
 var parentPath = jsarguments[1]
 var router = this.patcher.getnamed('clipSlotsRouter')
 
+function anything () {
+  "use strict"
+  
+  if (messagename === 'bang') {
+    this.patcher.apply(removeClipSlots)
+    createClipSlots()
+  }
+}
 
 function removeClipSlots (maxObj) {
   "use strict"
@@ -15,10 +24,7 @@ function removeClipSlots (maxObj) {
 
 function createClipSlots () {
   "use strict"
-
-  var i
-  var index
-  var clipSlotPatch
+  
   var trackApi = new LiveAPI(parentPath.split('/').join(' '))
   var clipSlots = trackApi.get('clip_slots')
 
@@ -27,19 +33,9 @@ function createClipSlots () {
     return
   }
 
-  for (i = 0; i < clipSlots.length / 2; i += 1) {
-    clipSlotPatch = this.patcher.newdefault(200, 200, 'bpatcher', 'clip_slot.maxpat', '@args', parentPath + '/clip_slots/' + i, i, '@presentation', 1, '@patching_rect', [128 + (i - 1) * 103, 462, 105, 32], '@presentation_rect', [0, 22 * i, 120, 22], '@varname', 'clip_slot_' + i)
+  for (var i = 0; i < clipSlots.length / 2; i += 1) {
+    var clipSlotPatch = this.patcher.newdefault(200, 200, 'bpatcher', 'clip_slot.maxpat', '@args', parentPath + '/clip_slots/' + i, i, '@presentation', 1, '@patching_rect', [128 + (i - 1) * 103, 462, 105, 32], '@presentation_rect', [0, 22 * i, 120, 22], '@varname', 'clip_slot_' + i)
     this.patcher.connect(router, 0, clipSlotPatch, 0)
     this.patcher.connect(this.patcher.getnamed('playingIndex'), 0, clipSlotPatch, 1)
-  }
-}
-
-
-function anything () {
-  "use strict"
-  
-  if (messagename === 'bang') {
-    this.patcher.apply(removeClipSlots)
-    createClipSlots()
   }
 }

@@ -99,6 +99,26 @@ The Live API returns values as a single element array. Respectrable does not cha
 #### References
 - [Live Object Model](https://docs.cycling74.com/max7/vignettes/live_object_model) (essential to understand)
 
+
+#### Bonus Notes
+# Notes
+Only `live_set`, `tracks` and some children of `tracks` can be reached from the GUI objects
+Only the following `mixer_device` children can be reached from the GUI objects:
+- `volume`
+- `panning`
+- `track_activator`
+
+Although `playing_clip` is not an actual LOM path it has been created here and the following can be set:
+- `pitch_coarse` at `/live_set/tracks/${TRACK_INDEX}/playing_clip` and send `'+1'` or `'-1'`
+- `move_playing_position` at `/live_set/tracks/${TRACK_INDEX}/playing_clip/move_playing_position` and send the number of beats to move
+
+And the following is observed:
+- playing_clip `playing_position` at `/live_set/tracks/${TRACK_INDEX}/playing_clip/playing_position`
+
+### Oberserving
+- tracks `output_meter_left` ``output_meter_right` `output_meter_level` `playing_slot_index`
+
+
 ### License
 
 :copyright: Willy Nolan 2017

@@ -4,6 +4,15 @@ autowatch = 1
 var path = jsarguments[1]
 var router = this.patcher.getnamed('mixerDeviceChildRouter')
 
+function anything () {
+  "use strict"
+  
+  if (messagename === 'bang') {
+    this.patcher.apply(removeSends)
+    makeChildren()
+  }
+}
+
 function removeSends (maxObj) {
   "use strict"
 
@@ -19,7 +28,6 @@ function makeChildren () {
 
   var i
   var sends
-  var apiId
   var sendsPatch
   var panningPatch
   var volumePatch
@@ -62,11 +70,3 @@ function makeChildren () {
   this.patcher.connect(router, 2, volumePatch, 0)
 }
 
-function anything () {
-  "use strict"
-  
-  if (messagename === 'bang') {
-    this.patcher.apply(removeSends)
-    makeChildren()
-  }
-}
