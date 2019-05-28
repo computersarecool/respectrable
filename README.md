@@ -48,7 +48,7 @@ Additionally, [`live.observers`](https://docs.cycling74.com/max7/maxobject/live.
 - `output_meter_level` 
 - `playing_slot_index`
 
-To `set` a property send a message in the following format:
+To `set` a property send a message in the following format (elements enclosed in `${}` are variables to be replaced:
 - Javascript message: `/canonical_path [set, ${PROPERTY} ${VALUE}]`
 - Native message: `/canonical_path/set/${PROPERTY} ${VALUE}`
 
@@ -63,7 +63,8 @@ To `call` a function send a message in the following format:
 Any `set` message is automatically followed by a `get` message so the newly changed value will be returned.
 
 Examples:
-	- The Javascript message `/live_set/tracks/0 ['set', 'color', 0]` and the channel message `/live_set/tracks/0/set/color 0` will both return `/live_set/tracks/0/color 0`
+
+- The Javascript message `/live_set/tracks/0 ['set', 'color', 0]` and the channel message `/live_set/tracks/0/set/color 0` will both return `/live_set/tracks/0/color 0`
 
 ##### Helper method
 Because of the complexity of creating an object on the client side from individual messages, the helper function `getState` can be called as `/live_set ['get_state', true]`
