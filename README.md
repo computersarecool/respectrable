@@ -1,5 +1,5 @@
 # Respectrable
-*Bi-directional communication with Ableton Live via Max for Live*
+*Bi-directional communication for Ableton Live via Max for Live*
 
 ## Description
 Live doesn't natively support [OSC](http://opensoundcontrol.org/introduction-osc) so the point is to create a system where any property can be set or queried via Max for Live which does support OSC.
@@ -58,13 +58,12 @@ Additionally, [`live.observers`](https://docs.cycling74.com/max7/maxobject/live.
 
 - To `call` a function send a message in the following format:
 - Javascript message: `/canonical_path [call, ${FUNCTION}]`
-- Native message: `/canonical_path/call ${FUNCTION}`***
+- Native message: `/canonical_path/call ${FUNCTION}`
 
 Any `set` message is automatically followed by a `get` message so the newly changed value will be returned
 
 Examples:
-	- The Javascript message: `/live_set/tracks/0 ['set', 'color', 0]` will return `/live_set/tracks/0 ["set" "color" 0]`
-	- The channel message: `/live_set/tracks/0/set/color 0` will return `/live_set/tracks/0/set/color 0`***
+	- The Javascript message `/live_set/tracks/0 ['set', 'color', 0]` and the channel message `/live_set/tracks/0/set/color 0` will both return `/live_set/tracks/0/color 0`
 
 ##### Helper method
 Because of the complexity of creating an object on the client side from individual messages, the helper function `getState` can be called as `/live_set ['get_state', true]`
@@ -94,4 +93,3 @@ The items marked with *** need to be united tested
 :copyright: Willy Nolan 2017
 
 [MIT License](https://en.wikipedia.org/wiki/MIT_License)
-
