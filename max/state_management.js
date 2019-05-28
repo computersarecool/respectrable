@@ -109,7 +109,7 @@ var liveSet = {
   }
 }
 
-// Functions to actually get the state
+// Functions to get the state of the live set
 function getState () {
   'use strict'
 

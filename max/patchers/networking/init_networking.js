@@ -1,4 +1,5 @@
 autowatch = 1
+
 var settings
 var settingsFilePath = '..\\..\\..\\settings.json'
 
@@ -50,11 +51,6 @@ function changePorts (channelUdpReceiver, messageUdpReceiver) {
 function initializeNetwork () {
   'use strict'
 
-  var task
-  var fromMaxMessageObj
-  var fromMaxChannelObj
-  var channelUdpReceiver
-  var messageUdpReceiver
   var networkPatch = this.patcher
   var messageLocalReceiver = networkPatch.getnamed('message_receiver')
   var channelLocalReceiver = networkPatch.getnamed('channel_receiver')
@@ -62,21 +58,21 @@ function initializeNetwork () {
   // Remove and create the UDP senders and receivers
   networkPatch.apply(removeObjects)
   settings.hosts.forEach(function (hostname, index) {
-    fromMaxMessageObj = networkPatch.newdefault(465.5 + (index * 133), 102, 'udpsend', hostname, settings.fromMaxMessage.port)
+    var fromMaxMessageObj = networkPatch.newdefault(465.5 + (index * 133), 102, 'udpsend', hostname, settings.fromMaxMessage.port)
     fromMaxMessageObj.message('maxqueuesize', 1024)
     fromMaxMessageObj.message('maxpacketsize', 39936)
 
-    fromMaxChannelObj = networkPatch.newdefault(795 + (index * 133), 102, 'udpsend', hostname, settings.fromMaxChannel.port)
+    var fromMaxChannelObj = networkPatch.newdefault(795 + (index * 133), 102, 'udpsend', hostname, settings.fromMaxChannel.port)
     networkPatch.connect(messageLocalReceiver, 0, fromMaxMessageObj, 0)
     networkPatch.connect(channelLocalReceiver, 0, fromMaxChannelObj, 0)
   })
 
-  channelUdpReceiver = networkPatch.newdefault(228, 60, 'udpreceive', settings.tempToMaxChannel.port)
-  messageUdpReceiver = networkPatch.newdefault(357, 60, 'udpreceive', settings.tempToMaxMessage.port)
+  var channelUdpReceiver = networkPatch.newdefault(228, 60, 'udpreceive', settings.tempToMaxChannel.port)
+  var messageUdpReceiver = networkPatch.newdefault(357, 60, 'udpreceive', settings.tempToMaxMessage.port)
   networkPatch.connect(channelUdpReceiver, 0, networkPatch.getnamed('incoming_channel_inlet'), 0)
   networkPatch.connect(messageUdpReceiver, 0, networkPatch.getnamed('incoming_message_inlet'), 0)
 
   // Send a delayed update (to unbind ports in Max)
-  task = new Task(changePorts, this, channelUdpReceiver, messageUdpReceiver)
+  var task = new Task(changePorts, this, channelUdpReceiver, messageUdpReceiver)
   task.schedule(200)
 }

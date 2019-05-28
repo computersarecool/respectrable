@@ -3,13 +3,13 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 2,
-			"revision" : 3,
-			"architecture" : "x86",
+			"minor" : 1,
+			"revision" : 0,
+			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 1781.0, 264.0, 120.0, 22.0 ],
+		"rect" : [ 68.0, 335.0, 120.0, 22.0 ],
 		"bgcolor" : [ 1.0, 1.0, 1.0, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -414,7 +414,7 @@
 					"destination" : [ "obj-38", 1 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"midpoints" : [ 279.83548, 356.0, 425.0, 356.0, 425.0, 446.0, 220.5, 446.0 ],
+					"midpoints" : [ 279.835472, 356.0, 425.0, 356.0, 425.0, 446.0, 220.5, 446.0 ],
 					"source" : [ "obj-47", 1 ]
 				}
 

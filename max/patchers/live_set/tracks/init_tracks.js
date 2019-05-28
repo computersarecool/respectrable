@@ -1,8 +1,19 @@
 autowatch = 1
 outlets = 1
+
 var router = this.patcher.getnamed('trackRouter')
 var path = jsarguments[1]
 
+function anything () {
+  "use strict"
+  
+  if (messagename === 'bang') {
+    if (path === '/live_set/return_tracks') {
+      outlet(0, 'return_tracks')
+    }
+    makeTracks()
+  }
+}
 
 function removeTracks (maxObj) {
   "use strict"
@@ -13,15 +24,11 @@ function removeTracks (maxObj) {
   }
 }
 
-
 function makeTracks () {
   "use strict"
 
-  var i
   var trackIds
   var scriptingName
-  var trackPatch
-  var currentTrack
   var bPatcherYP = 176
   var bPatcherW = 121
   var bPatcherH = 591
@@ -44,21 +51,9 @@ function makeTracks () {
 
   this.patcher.apply(removeTracks)
 
-  for (i = 0; i < trackIds.length; i += 1) {
-    currentTrack = new LiveAPI('id ' + trackIds[i])
-    trackPatch = this.patcher.newdefault(200, 200, 'bpatcher', 'track.maxpat', '@args', '/' + currentTrack.unquotedpath.split(' ').join('/'), i, '@presentation', 1, '@border', 1,  '@patching_rect', [i * bPatcherW + (i * 30) + 20, bPatcherYP, bPatcherW, bPatcherH], '@presentation_rect', [i * bPatcherW, 0, bPatcherW, bPatcherH], '@varname', trackIds.length > 1 ? scriptingName + i : scriptingName)
+  for (var i = 0; i < trackIds.length; i += 1) {
+    var currentTrack = new LiveAPI('id ' + trackIds[i])
+    var trackPatch = this.patcher.newdefault(200, 200, 'bpatcher', 'track.maxpat', '@args', '/' + currentTrack.unquotedpath.split(' ').join('/'), i, '@presentation', 1, '@border', 1,  '@patching_rect', [i * bPatcherW + (i * 30) + 20, bPatcherYP, bPatcherW, bPatcherH], '@presentation_rect', [i * bPatcherW, 0, bPatcherW, bPatcherH], '@varname', trackIds.length > 1 ? scriptingName + i : scriptingName)
     this.patcher.connect(router, 0, trackPatch, 0)
-  }
-}
-
-
-function anything () {
-  "use strict"
-  
-  if (messagename === 'bang') {
-    if (path === '/live_set/return_tracks') {
-      outlet(0, 'return_tracks')
-    }
-    makeTracks()
   }
 }
