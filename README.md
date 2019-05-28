@@ -28,11 +28,11 @@ Respectrable is a Max for Live device that facilitates this. In the rest of this
 - The `examples` folder contains a [TouchDesigner](http://derivative.ca/) example.
 
 ## Functionality
-This assumes knowledge of the Live Object Model known as [the LOM]](https://docs.cycling74.com/max7/vignettes/live_object_model)
+This assumes knowledge of the Live Object Model known as [the LOM](https://docs.cycling74.com/max7/vignettes/live_object_model)
 
-There are two ways to reach Live objects.  One is to use a Max object like a [`live.object`](https://docs.cycling74.com/max7/maxobject/live.object) and the other is through ['Javascript'](https://docs.cycling74.com/max7/vignettes/jsliveapi)
+There are two ways to reach Live objects.  One is to use a Max object like a [`live.object`](https://docs.cycling74.com/max7/maxobject/live.object) and the other is through the [Max Javascript API](https://docs.cycling74.com/max7/vignettes/jsliveapi).
 
-Using Javascript is easier for most things but runs in a [low priority queue](https://cycling74.com/forums/javascript-performance-vs-max-objects/)
+Using Javascript is easier for most things but runs in a [low priority queue](https://cycling74.com/forums/javascript-performance-vs-max-objects/).
 
 So respectrable supports both Javascript objects and native objects (for most things).
 
@@ -60,7 +60,7 @@ To `call` a function send a message in the following format:
 - Javascript message: `/canonical_path [call, ${FUNCTION}]`
 - Native message: `/canonical_path/call ${FUNCTION}`
 
-Any `set` message is automatically followed by a `get` message so the newly changed value will be returned
+Any `set` message is automatically followed by a `get` message so the newly changed value will be returned.
 
 Examples:
 	- The Javascript message `/live_set/tracks/0 ['set', 'color', 0]` and the channel message `/live_set/tracks/0/set/color 0` will both return `/live_set/tracks/0/color 0`
@@ -68,10 +68,10 @@ Examples:
 ##### Helper method
 Because of the complexity of creating an object on the client side from individual messages, the helper function `getState` can be called as `/live_set ['get_state', true]`
 
-This is the only message that performs logic on the Max side to return a JSON formatted string that is a fairly complete state representation of the state of the Live set
+This is the only message that performs logic on the Max side to return a JSON formatted string that is a fairly complete state representation of the state of the Live set.
 
 #### Minor Notes
-The Live API returns values as a single element array. Respectrable does not change this so to get the value (what you probably want) access the first element in the array
+The Live API returns values as a single element array. Respectrable does not change this so to get the value (what you probably want) access the first element in the array.
 
 ## Extra Notes
 #### Required Software
@@ -79,8 +79,8 @@ The Live API returns values as a single element array. Respectrable does not cha
 - Max for Live
 
 #### settings.json
-- Because of a [bug](https://cycling74.com/forums/udpreceive-not-really-working-binding-for-osc/) with Max, `tempToMaxChannel` and `tempToMaxMessage` are used to keep ports working
-- Because Max [doesn't support multicasting](https://cycling74.com/forums/udp-multicast-messages-without-java) the `hosts` field is an array of the hosts to which you want to send messages.  Both hostnames and IP addresses will work
+- Because of a [bug](https://cycling74.com/forums/udpreceive-not-really-working-binding-for-osc/) with Max, `tempToMaxChannel` and `tempToMaxMessage` are used to keep ports working.
+- Because Max [doesn't support multicasting](https://cycling74.com/forums/udp-multicast-messages-without-java) the `hosts` field is an array of the hosts to which you want to send messages.  Both hostnames and IP addresses will work.
 
 #### References
 - [Live Object Model](https://docs.cycling74.com/max7/vignettes/live_object_model) (essential to understand)
