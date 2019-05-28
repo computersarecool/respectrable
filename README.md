@@ -48,15 +48,15 @@ Additionally, [`live.observers`](https://docs.cycling74.com/max7/maxobject/live.
 - `output_meter_level` 
 - `playing_slot_index`
 
-- To `set` a property send a message in the following format:
+To `set` a property send a message in the following format:
 - Javascript message: `/canonical_path [set, ${PROPERTY} ${VALUE}]`
 - Native message: `/canonical_path/set/${PROPERTY} ${VALUE}`
 
-- To `get` a property send a message in the following format:
+To `get` a property send a message in the following format:
 - Javascript message: `/canonical_path [get, ${PROPERTY}]`
 - Native message: `/canonical_path/get/${PROPERTY} ${VALUE}`
 
-- To `call` a function send a message in the following format:
+To `call` a function send a message in the following format:
 - Javascript message: `/canonical_path [call, ${FUNCTION}]`
 - Native message: `/canonical_path/call ${FUNCTION}`
 
@@ -81,9 +81,6 @@ The Live API returns values as a single element array. Respectrable does not cha
 #### settings.json
 - Because of a [bug](https://cycling74.com/forums/udpreceive-not-really-working-binding-for-osc/) with Max, `tempToMaxChannel` and `tempToMaxMessage` are used to keep ports working
 - Because Max [doesn't support multicasting](https://cycling74.com/forums/udp-multicast-messages-without-java) the `hosts` field is an array of the hosts to which you want to send messages.  Both hostnames and IP addresses will work
-
-### TODO:
-The items marked with *** need to be united tested
 
 #### References
 - [Live Object Model](https://docs.cycling74.com/max7/vignettes/live_object_model) (essential to understand)
