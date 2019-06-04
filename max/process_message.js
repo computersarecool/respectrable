@@ -11,11 +11,15 @@ var getState = require('state_management').getState
 function anything () {
   'use strict'
 
-  // Split the incoming OSC formatted coninical path into a string with spaces (and remove the first blank returned by the split method)
+  // Split the incoming OSC formatted canonical path into a string with spaces (and remove the first blank returned by the split method)
+  // This is expecting an OSC message like "/live_set/tracks/0 set color 0"
   var pathArray = messagename.split('/')
   pathArray.shift()
   var path = pathArray.join(' ')
-  var apiObj = new LiveAPI(path)
+
+  if (pathArray[0] !== 'global') {  
+    var apiObj = new LiveAPI(path)
+  } 
 
   var messageType = arguments[0]
   var property = arguments[1]
@@ -48,22 +52,22 @@ function anything () {
     // Experimental
     case 'move_bank':
       data = moveBank(property)
-      return
+      break
     case 'set_scene':
       setScene(property)
-      return
+      break
     case 'fire_track':
       fireTrack(property)
-      return
+      break
     case 'stop_track':
       stopTrack(property)
-      return
+      break
     case 'increase_tempo':
       changeTempo(true)
-      return
+      break
     case 'decrease_tempo':
       changeTempo(false)
-      return
+      break
   }
 
   // Format and send back the returned data
@@ -91,9 +95,9 @@ function moveBank (direction) {
   liveSetView.set('selected_scene', 'id ' + nextSceneId)
 
   // Collect clip data
-  var clipNames = []
-  var clipColors = []
-  var clipIndices = []
+  var clipBankNames = []
+  var clipBankColors = []
+  var clipBankIndices = []
 
   for (var index = newHighlightedIndex; index < newHighlightedIndex + bankLength; index++) {
     var clipName
@@ -109,18 +113,18 @@ function moveBank (direction) {
       clipColor = 000000000
     }
 
-    clipNames.push(clipName)
-    clipColors.push(clipColor)
-    clipIndices.push(index)
+    clipBankNames.push(clipName)
+    clipBankColors.push(clipColor)
+    clipBankIndices.push(index)
   }
 
-  clipNames = JSON.stringify(clipNames)
-  clipColors = JSON.stringify(clipColors)
-  clipIndices = JSON.stringify(clipIndices)
+  clipBankNames = JSON.stringify(clipBankNames)
+  clipBankColors = JSON.stringify(clipBankColors)
+  clipBankIndices = JSON.stringify(clipBankIndices)
   
-  outlet(0, '/clip_names', clipNames)
-  outlet(0, '/clip_colors', clipColors)
-  outlet(0, '/clip_indices', clipIndices)
+  outlet(0, '/clip_bank_names', clipBankNames)
+  outlet(0, '/clip_bank_colors', clipBankColors)
+  outlet(0, '/clip_bank_indices', clipBankIndices)
 }
 
 function setScene (index) {
