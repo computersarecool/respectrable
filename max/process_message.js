@@ -17,7 +17,8 @@ function anything () {
   pathArray.shift()
   var path = pathArray.join(' ')
 
-  if (pathArray[0] !== 'global') {  
+  if (pathArray[0] !== 'global') {
+    post(pathArray[0])
     var apiObj = new LiveAPI(path)
   } 
 
@@ -155,4 +156,6 @@ function changeTempo(increase) {
   var nextTempo = increase ? (currentTempo + 1) : (currentTempo - 1)
  
   liveSet.set('tempo', nextTempo)
+
+  outlet(0, '/new_tempo', nextTempo)
 }

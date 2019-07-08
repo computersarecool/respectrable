@@ -1,9 +1,9 @@
 /* global LiveAPI */
 
-// Object to store the state of our set
+// Object to store the state of the Live set
 var LOM = {}
 
-// These are all the children / properties we want to query when we "get state"
+// These are all the children / properties we want to query when getState is called
 var clip = {
   properties: [
     'color',
@@ -109,7 +109,7 @@ var liveSet = {
   }
 }
 
-// Functions to get the state of the live set
+// Functions to get the state of the Live set
 function getState () {
   'use strict'
 
