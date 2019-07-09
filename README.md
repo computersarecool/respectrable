@@ -29,25 +29,26 @@ Respectrable is a Max for Live device that facilitates this. In the rest of this
 
 ## Functionality
 ### Setting Properties
-- When added to a track, respectrable creates Max objects representing the Live set.  These can be seen (to some degree) in the respectrable max object.
+- When added to a track, respectrable creates Max objects representing the Live set. These can be seen (to some degree) in the respectrable Max object.
 Some of the Live set is reachable through these Max objects but not every single element in the Live Object Model can be reached. 
+Functions can be called and properties can be set or gotten (but [properties](https://docs.cycling74.com/max5/vignettes/js/jsliveapi.html#header2) can not be reached)
 
-Only `live_set`, `tracks` and the following children of `tracks` can be reached from the GUI objects:
+`live_set`, `tracks` and the following children of `tracks` can be reached from the GUI objects:
 - `mixer_device`
 - `devices`
 
-Additionally, only the following `mixer_device` children can be reached from the GUI objects:
+Additionally, the following `mixer_device` children can be reached from the GUI objects:
 - `volume`
 - `panning`
 - `track_activator`
 
-- To reach other parts of the Live set, messages should be sent via the Javascript API.
+- To reach other parts of the Live set messages should be sent via the Javascript API which [might perform worse](https://cycling74.com/forums/javascript-performance-vs-max-objects/) but can reach every element and property of a Live set
 
 - The two different message types (Native Max Objects and Javascript) should be sent to the ports specified in the `hosts` section of the `settings.json` file
 
 ### Oberserving
 Some properties of `tracks` are observerd. These are:
-- `output_meter_left` ``output_meter_right` `playing_slot_index`
+- `output_meter_left` ``output_meter_right` `output_meter_level` `playing_slot_index`
 
 - After initialization the current value for each property that is observed will be sent to the `fromMaxChannel` port in the following format: `/canonical_path ['observe', property, value]`
 	- `/canonical_path` is the OSC address and is the same as the [LOM](https://docs.cycling74.com/max7/vignettes/live_object_model) canonical path with spaces replaced by `/`
@@ -73,53 +74,30 @@ Some properties of `tracks` are observerd. These are:
   - Responses to this message will be in the same format and will be sent to to either the `toMaxChannel` or `toMaxMessage` port
 
 
-##### Helper method
-Because of the complexity of creating a representation of the Live set from individual messages a helper function `getState` can be called as `/live_set ['get_state', true]`
+##### Extra help
+- Because of the complexity of creating a representation of the Live set from individual messages a helper function `getState` can be called as `/live_set ['get_state', true]`.  This returns a JSON formatted string that is a fairly complete state representation of the state of the Live set.
+- Although `playing_clip` is not a real LOM path it has been created in this project and the following can be set through the GUI objects:
+	- `pitch_coarse` at `/live_set/tracks/${TRACK_INDEX}/playing_clip` and send `'+1'` or `'-1'`
+	- `move_playing_position` at `/live_set/tracks/${TRACK_INDEX}/playing_clip/move_playing_position` and send the number of beats to move
+- playing_clip `playing_position` is observed at `/live_set/tracks/${TRACK_INDEX}/playing_clip/playing_position`
 
-This is the only message that performs logic on the Max side to return a JSON formatted string that is a fairly complete state representation of the state of the Live set
+### Extra Notes
+- The Live API returns values as a single element array. Respectrable does not change this so to get the value (what you probably want) access the first element in the array.
+- Because of a [bug](https://cycling74.com/forums/udpreceive-not-really-working-binding-for-osc/) with Max `tempToMaxChannel` and `tempToMaxMessage` are used to keep ports working.
+- Because max [doesn't support multicasting](https://cycling74.com/forums/udp-multicast-messages-without-java) the `hosts` field is an array of the hosts to which you want to send messages.  Hostnames and IP addresses will both work.
+- This project also has some (i.e. visual eq) Max patches in the Max folder
 
-#### Properties observed with live.observers	
-| live_set                     | tracks               | active_clip        | devices      | mixer_device              | clip    |
-|------------------------------|----------------------|--------------------|--------------|---------------------------|---------|
-| `tempo`                      | `output_meter_right` |  `length`          | `parameters` | `panning`                 | `color` |
-| `clip_trigger_quantization`  | `output_meter_left`  | `playing_position` | `volume`     | `track_activator`         |         |
-|                              | `color`              |                    |              |                           |         |
-|                              | `playing_slot_index` |                    |              |                           |         |
-|                              | `solo`               |                    |              |                           |         |
-
-
-#### Minor Notes
-The Live API returns values as a single element array. Respectrable does not change this so to get the value (what you probably want) access the first element in the array.
-
-
-## Extra Notes
 #### Required Software
 - Ableton Live 9+
 - Max for Live
 
-
-#### settings.json
-- Because of a [bug](https://cycling74.com/forums/udpreceive-not-really-working-binding-for-osc/) with max `tempToMaxChannel` and `tempToMaxMessage` are used to keep ports working.
-- Because max [doesn't support multicasting](https://cycling74.com/forums/udp-multicast-messages-without-java) the `hosts` field is an array of the hosts to which you want to send messages.  Hostnames and IP addresses will both work.
-
+#### TODO:
+- Make number of tracks in playing_clip dynamic
+- Confirm that JS messages respond correctly to messages
+- Confirm that channel messages respond correctly to messages and that get, set, and call, can all be called
 
 #### References
 - [Live Object Model](https://docs.cycling74.com/max7/vignettes/live_object_model) (essential to understand)
-
-
-#### Bonus Notes
-# Notes
-
-
-
-
-### `playing_clip`
-Although `playing_clip` is not a real LOM path it has been created in this project and the following can be set through the GUI objects:
-- `pitch_coarse` at `/live_set/tracks/${TRACK_INDEX}/playing_clip` and send `'+1'` or `'-1'`
-- `move_playing_position` at `/live_set/tracks/${TRACK_INDEX}/playing_clip/move_playing_position` and send the number of beats to move
-
-The following properties of `playing_clip` observed:
-- playing_clip `playing_position` at `/live_set/tracks/${TRACK_INDEX}/playing_clip/playing_position`
 
 ### License
 
