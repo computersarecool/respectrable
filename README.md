@@ -47,7 +47,7 @@ Additionally, only the following `mixer_device` children can be reached from the
 
 ### Oberserving
 Some properties of `tracks` are observerd. These are:
-- `output_meter_left` ``output_meter_right` `output_meter_level` `playing_slot_index`
+- `output_meter_left` ``output_meter_right` `playing_slot_index`
 
 - After initialization the current value for each property that is observed will be sent to the `fromMaxChannel` port in the following format: `/canonical_path ['observe', property, value]`
 	- `/canonical_path` is the OSC address and is the same as the [LOM](https://docs.cycling74.com/max7/vignettes/live_object_model) canonical path with spaces replaced by `/`
