@@ -4,27 +4,28 @@ inlets = 1
 outlets = 1
 autowatch = 1
 
-// This is a function that will get a representation of the live set state
+// This is a function that will get a representation of the Live set state
 var getState = require('state_management').getState
 
-// Messages will come in the form of "/canonical_path messageType property (value)" where canonical_path is the LiveAPI path with slashes instead of spaces
+// Messages come in the form of "/canonical_path messageType property (value)" where canonical_path is the LiveAPI path with slashes instead of spaces
 function anything () {
   'use strict'
 
-  // Split the incoming OSC formatted coninical path into a string with spaces (and remove the first blank returned by the split method)
+  // Split the incoming OSC formatted canonical path into a string with spaces (and remove the first blank returned by the split method)
+  // This is expecting an OSC message like "/live_set/tracks/0 set color 0"
   var pathArray = messagename.split('/')
   pathArray.shift()
   var path = pathArray.join(' ')
-  var apiObj = new LiveAPI(path)
 
+  var apiObj = new LiveAPI(path)
   var messageType = arguments[0]
   var property = arguments[1]
   var value = arguments[2]
 
-  // data will be returned by the LiveAPI
+  // `data` will be returned
   var data
 
-  // Call the LiveAPI object with either get, set, propert or call methods and return data (the reponse from the LiveAPI)
+  // Access an element of the Live set
   switch (messageType) {
     case 'get':
       data = apiObj.get(property)
@@ -40,8 +41,11 @@ function anything () {
     case 'property':
       data = apiObj[property]
       break
+    
+    // Helper method
     case 'get_state':
       var LOM = getState()
+      property = messageType
       data = JSON.stringify(LOM)
       break
   }

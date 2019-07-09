@@ -1,10 +1,11 @@
 # Respectrable
-*Bi-directional communication for Ableton Live via Max for Live*
+*Bi-directional communication with Ableton Live via Max for Live*
 
 ## Description
-Live doesn't natively support [OSC](http://opensoundcontrol.org/introduction-osc) so the point is to create a system where any property can be set or queried via Max for Live which does support OSC.
+The first point is to create a system where any property of a Live set can be changed by sending an [Open Sound Control (OSC)](http://opensoundcontrol.org/introduction-osc) message to the Ableton Live API.
+The second point is that any change made to a Live set sends an OSC notification.
 
-In this way a Live set can control -- or be controlled by -- any OSC compatible system.
+In this way a Live set can control -- or be controlled by -- anything that uses OSC.
 
 Respectrable is a Max for Live device that facilitates this. In the rest of this README "respectrable" refers to the Max for Live device.
 
@@ -16,72 +17,77 @@ Respectrable is a Max for Live device that facilitates this. In the rest of this
 ## To Use
 - Add the folder containing this repo to Max's [search path](https://docs.cycling74.com/max7/vignettes/search_path).
 
-- Add `respectrable.amxd` (located in the `max` directory) to the master track on a Live set.
+- Add `respectrable.amxd` (located in the `max` directory) to the master track on a Live set or open `demo_set.als` in the ableton folder.
 
-- Send OSC messages to the `toMaxChannel` and `toMaxMessage` ports indicated in the `settings.json` file.
+- Send OSC messages to the `toMaxChannel` and `toMaxMessage` ports specified in the `settings.json` file.
 
 ## Project Structure
 - The `max` folder contains all of the Max for Live code and patches.
 
 - The `ableton` folder contains a demo Live set with respectrable already loaded.
 
-- The `examples` folder contains a [TouchDesigner](http://derivative.ca/) example.
+- The `examples` folder contains a [TouchDesigner](http://derivative.ca/) example. Download that program to test it.
 
 ## Functionality
-This assumes knowledge of the Live Object Model known as [the LOM](https://docs.cycling74.com/max7/vignettes/live_object_model)
+### Setting Property Values
+- When added to a track, respectrable creates Max objects representing the Live set. These can be seen in the respectrable Max object.
+Some of the Live set is reachable through these Max objects but not every element in the Live Object Model can be reached. 
+Functions can be called and properties can be set or accessed but [properties](https://docs.cycling74.com/max5/vignettes/js/jsliveapi.html#header2) can not be reached
 
-There are two ways to reach Live objects.  One is to use a Max object like a [`live.object`](https://docs.cycling74.com/max7/maxobject/live.object) and the other is through the [Max Javascript API](https://docs.cycling74.com/max7/vignettes/jsliveapi).
+`live_set`, `view`, `master_track`, `tracks` and the following children (and all of their children) of `tracks` can be reached from the GUI objects:
+- `mixer_device`
+- `devices`
+- `clip_slots`
 
-Using Javascript is easier for most things but runs in a [low priority queue](https://cycling74.com/forums/javascript-performance-vs-max-objects/).
+- To reach other parts of the Live set messages should be sent via the Javascript API which [might perform worse](https://cycling74.com/forums/javascript-performance-vs-max-objects/) but can reach every element and property of a Live set
+- The two different message types (Native Max Objects and Javascript) should be sent to the ports specified in the `hosts` section of the `settings.json` file
 
-So respectrable supports both Javascript objects and native objects (for most things).
-
-Any part of the LiveAPI can be reached with a Javascript message, but only `live_set`, `tracks` and some children of `tracks` can be reached from the GUI objects.
-Only the following `mixer_device` children can be reached from the GUI objects:
-- `volume`
-- `panning`
-- `track_activator`
-
-Additionally, [`live.observers`](https://docs.cycling74.com/max7/maxobject/live.observer) are used to observe only the following properties that change often:
+### Oberserving Property Values
+The following properties of `tracks` are observerd:
 - `output_meter_left` 
 - `output_meter_right` 
-- `output_meter_level` 
 - `playing_slot_index`
 
-To `set` a property send a message in the following format (elements enclosed in `${}` are variables to be replaced:
-- Javascript message: `/canonical_path [set, ${PROPERTY} ${VALUE}]`
-- Native message: `/canonical_path/set/${PROPERTY} ${VALUE}`
+- After initialization the current value for each property that is observed will be sent to the `fromMaxChannel` port in the following format: `/canonical_path value`
+    e.g. `/live_set/tracks/output_meter_left 0.5`
+    
+  - Any time an observed property changes its current value will be sent to the `fromMaxChannel` port.
 
-To `get` a property send a message in the following format:
-- Javascript message: `/canonical_path [get, ${PROPERTY}]`
-- Native message: `/canonical_path/get/${PROPERTY} ${VALUE}`
+- To `set` or `get` a property or to `call` a function send an OSC message to either the `toMaxChannel` port like so `/canonical_path/${MESSAGE_TYPE} value`
+	Examples:
+	`/live_set/tracks/0/get' 'color'`
+	`/live_set/tracks/0/set/color 3947580`
+	`/live_set/tracks/0/call' 'stop_all_clips'`
 
-To `call` a function send a message in the following format:
-- Javascript message: `/canonical_path [call, ${FUNCTION}]`
-- Native message: `/canonical_path/call ${FUNCTION}`
+### Using the Javascript API
+Some parts of a Live set (such as the `live_app`) and any property (such as `id` or children) are not reachable from the GUI objects. To reach these use the Javavscript messages.
 
-Any `set` message is automatically followed by a `get` message so the newly changed value will be returned.
+Send to the `toMaxMessage` port a messaged fromed like so: /canonical_path [messageType, property, (value)]
 
-Examples:
+- `canonical_path` is the OSC address, which is the same as the LOM Canonical path
+- `messageType` is the first OSC argument and is either `set`, `get`, `call` or `property`. (Some properties are considered "LiveAPI" properties (i.e. id and path). These are different than other properties (see LOM for details). These properties should use the messageType of `property`
+- `property` is the second OSC argument and is either the name of the property that is being set or queried or the name of the function to call
+- `value` is the third OSC argument and should only be included in a set message in which case it is the value to set
 
-- The Javascript message `/live_set/tracks/0 ['set', 'color', 0]` and the channel message `/live_set/tracks/0/set/color 0` will both return `/live_set/tracks/0/color 0`
+- Responses will be sent to the `fromMaxMessage` port
 
-##### Helper method
-Because of the complexity of creating an object on the client side from individual messages, the helper function `getState` can be called as `/live_set ['get_state', true]`
+##### Extra Help
+- Because of the complexity of creating a representation of the Live set from individual messages a helper function `getState` can be called as `/live_set ['get_state', true]`.  This returns a JSON formatted string that is a fairly complete state representation of the state of the Live set.
 
-This is the only message that performs logic on the Max side to return a JSON formatted string that is a fairly complete state representation of the state of the Live set.
+- Although `playing_clip` is not a real LOM path it has been created in this project and the following can be set through the GUI objects:
+	- `pitch_coarse` at `/live_set/tracks/${TRACK_INDEX}/playing_clip` and send the strings `'+1'` or `'-1'` to increment or decrement the pitch
+	- `move_playing_position` at `/live_set/tracks/${TRACK_INDEX}/playing_clip/call/move_playing_position` and send the number of beats to move
 
-#### Minor Notes
-The Live API returns values as a single element array. Respectrable does not change this so to get the value (what you probably want) access the first element in the array.
+- playing_clip `playing_position` is observed at `/live_set/tracks/${TRACK_INDEX}/playing_clip/playing_position`
 
-## Extra Notes
+### Extra Notes
+- Because of a [bug](https://cycling74.com/forums/udpreceive-not-really-working-binding-for-osc/) with Max `tempToMaxChannel` and `tempToMaxMessage` are used to keep ports working.
+- Because max [doesn't support multicasting](https://cycling74.com/forums/udp-multicast-messages-without-java) the `hosts` field is an array of the hosts to which you want to send messages.  Hostnames and IP addresses will both work.
+- This project also has some (i.e. a visual eq) Max patches in the Max folder
+
 #### Required Software
 - Ableton Live 9+
 - Max for Live
-
-#### settings.json
-- Because of a [bug](https://cycling74.com/forums/udpreceive-not-really-working-binding-for-osc/) with Max, `tempToMaxChannel` and `tempToMaxMessage` are used to keep ports working.
-- Because Max [doesn't support multicasting](https://cycling74.com/forums/udp-multicast-messages-without-java) the `hosts` field is an array of the hosts to which you want to send messages.  Both hostnames and IP addresses will work.
 
 #### References
 - [Live Object Model](https://docs.cycling74.com/max7/vignettes/live_object_model) (essential to understand)

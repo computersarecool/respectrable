@@ -1,7 +1,7 @@
 {
   "networking": {
     "hosts": [
-      "localhost"
+      "255.255.255.255"
     ],
     "tempToMaxChannel": {
       "port": 7071
@@ -10,16 +10,16 @@
       "port": 7091
     },
     "toMaxChannel": {
-      "port": 7070
+      "port": 7000
     },
     "toMaxMessage": {
-      "port": 7090
+      "port": 7001
     },
     "fromMaxChannel": {
-      "port": 7040
+      "port": 8000
     },
     "fromMaxMessage": {
-      "port": 7030
+      "port": 8001
     }
   }
 }
