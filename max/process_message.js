@@ -4,10 +4,10 @@ inlets = 1
 outlets = 1
 autowatch = 1
 
-// This is a function that will get a representation of the live set state
+// This is a function that will get a representation of the Live set state
 var getState = require('state_management').getState
 
-// Messages will come in the form of "/canonical_path messageType property (value)" where canonical_path is the LiveAPI path with slashes instead of spaces
+// Messages come in the form of "/canonical_path messageType property (value)" where canonical_path is the LiveAPI path with slashes instead of spaces
 function anything () {
   'use strict'
 
@@ -17,8 +17,8 @@ function anything () {
   pathArray.shift()
   var path = pathArray.join(' ')
 
+  // Some experimental messages are sent to global
   if (pathArray[0] !== 'global') {
-    post(pathArray[0])
     var apiObj = new LiveAPI(path)
   } 
 
@@ -29,7 +29,7 @@ function anything () {
   // data will be returned by the LiveAPI
   var data
 
-  // Call the LiveAPI object with either get, set, propert or call methods and return data (the reponse from the LiveAPI)
+  // Access an element of the Live set
   switch (messageType) {
     case 'get':
       data = apiObj.get(property)
@@ -45,30 +45,33 @@ function anything () {
     case 'property':
       data = apiObj[property]
       break
+    
+    // Helper method
     case 'get_state':
       var LOM = getState()
+      property = messageType
       data = JSON.stringify(LOM)
       break
 
-    // Experimental
+    // These options return their own data from an outlet
     case 'move_bank':
       data = moveBank(property)
-      break
+      return
     case 'set_scene':
       setScene(property)
-      break
+      return
     case 'fire_track':
       fireTrack(property)
-      break
+      return
     case 'stop_track':
       stopTrack(property)
-      break
+      return
     case 'increase_tempo':
       changeTempo(true)
-      break
+      return
     case 'decrease_tempo':
       changeTempo(false)
-      break
+      return
   }
 
   // Format and send back the returned data
@@ -101,17 +104,15 @@ function moveBank (direction) {
   var clipBankIndices = []
 
   for (var index = newHighlightedIndex; index < newHighlightedIndex + bankLength; index++) {
-    var clipName
-    var clipColor
+    // Default values for if there is not a song in this clip
+    var clipName = '-'
+    var clipColor = 000000000
 
     // Clips also have a separate entry for "id" so divide by two
     if (index < clips.length / 2) {
       var clipSlot = new LiveAPI('live_set tracks 0 clip_slots ' + index + ' clip')
       clipName = clipSlot.get('name')[0]
       clipColor = clipSlot.get('color')[0]
-    } else {
-      clipName = '-'
-      clipColor = 000000000
     }
 
     clipBankNames.push(clipName)
@@ -133,21 +134,8 @@ function setScene (index) {
   var liveSetView = new LiveAPI('live_set view')
 
   liveSetView.set('selected_scene', 'id ' + nextSceneId)
-}
 
-function fireTrack(trackIndex) {
-  var selectedSceneObj = new LiveAPI('live_set view selected_scene')
-  var selectedScene = selectedSceneObj.path.split(' ')
-  var currentlyHighlightedIndex = parseInt(selectedScene[2].slice(0, -1))
-  var clipSlot = new LiveAPI('live_set tracks ' + trackIndex + ' clip_slots ' + currentlyHighlightedIndex + ' clip')
-  
-  clipSlot.call('fire')
-}
-
-function stopTrack(trackIndex) {
-  var trackObj = new LiveAPI('live_set tracks ' + trackIndex)
-
-  trackObj.call('stop_all_clips')
+  outlet(0, '/live_set/view/selected_scene', 'id ' + nextSceneId)
 }
 
 function changeTempo(increase) {
@@ -157,5 +145,19 @@ function changeTempo(increase) {
  
   liveSet.set('tempo', nextTempo)
 
-  outlet(0, '/new_tempo', nextTempo)
+  outlet(0, '/new_tempo', parseInt(liveSet.get('tempo')))
+}
+
+function fireTrack(trackIndex) {
+  var selectedSceneObj = new LiveAPI('live_set view selected_scene')
+  var selectedSceneAsNumber = selectedSceneObj.path.slice(1, -1).split(' ')[2]
+  var clipSlot = new LiveAPI('live_set tracks ' + trackIndex + ' clip_slots ' + selectedSceneAsNumber + ' clip')
+  
+  clipSlot.call('fire')
+}
+
+function stopTrack(trackIndex) {
+  var trackObj = new LiveAPI('live_set tracks ' + trackIndex)
+
+  trackObj.call('stop_all_clips')
 }

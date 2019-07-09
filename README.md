@@ -91,10 +91,12 @@ Some properties of `tracks` are observerd. These are:
 - Ableton Live 9+
 - Max for Live
 
-#### TODO:
-- Make number of tracks in playing_clip dynamic
-- Confirm that JS messages respond correctly to messages
-- Confirm that channel messages respond correctly to messages and that get, set, and call, can all be called
+#### Bugs
+- `*/playing_clip` does not always return the correct color
+
+#### TODO
+- Finish README
+- Replace all JS functions with javascript functions
 
 #### References
 - [Live Object Model](https://docs.cycling74.com/max7/vignettes/live_object_model) (essential to understand)
