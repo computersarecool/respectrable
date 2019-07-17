@@ -12,7 +12,7 @@ Respectrable is a Max for Live device that facilitates this. In the rest of this
 [![Respectrable demo screen capture](https://i.imgur.com/IFKorea.jpg)](https://www.youtube.com/watch?time_continue=2&v=L1oF4Amrf9k "Respectrable demo screen capture")
 
 ## Tested On
-- Windows
+- Windows (but should work on Apple as well)
 
 ## To Use
 - Add the folder containing this repo to Max's [search path](https://docs.cycling74.com/max7/vignettes/search_path).
@@ -42,7 +42,7 @@ Functions can be called and properties can be set or accessed but [properties](h
 - To reach other parts of the Live set messages should be sent via the Javascript API which [might perform worse](https://cycling74.com/forums/javascript-performance-vs-max-objects/) but can reach every element and property of a Live set
 - The two different message types (Native Max Objects and Javascript) should be sent to the ports specified in the `hosts` section of the `settings.json` file
 
-### Oberserving Property Values
+### Oberserved Property Values
 The following properties of `tracks` are observerd:
 - `output_meter_left` 
 - `output_meter_right` 
@@ -53,6 +53,7 @@ The following properties of `tracks` are observerd:
     
   - Any time an observed property changes its current value will be sent to the `fromMaxChannel` port.
 
+### `get`, `set`, and `call`
 - To `set` or `get` a property or to `call` a function send an OSC message to either the `toMaxChannel` port like so `/canonical_path/${MESSAGE_TYPE} value`
 	Examples:
 	`/live_set/tracks/0/get' 'color'`
@@ -72,13 +73,19 @@ Send to the `toMaxMessage` port a messaged fromed like so: /canonical_path [mess
 - Responses will be sent to the `fromMaxMessage` port
 
 ##### Extra Help
-- Because of the complexity of creating a representation of the Live set from individual messages a helper function `getState` can be called as `/live_set ['get_state', true]`.  This returns a JSON formatted string that is a fairly complete state representation of the state of the Live set.
-
 - Although `playing_clip` is not a real LOM path it has been created in this project and the following can be set through the GUI objects:
-	- `pitch_coarse` at `/live_set/tracks/${TRACK_INDEX}/playing_clip` and send the strings `'+1'` or `'-1'` to increment or decrement the pitch
+	- `pitch_coarse` at `/live_set/tracks/${TRACK_INDEX}/playing_clip` this also supports `'+1'` or `'-1'` as arguments to increment or decrement the pitch
 	- `move_playing_position` at `/live_set/tracks/${TRACK_INDEX}/playing_clip/call/move_playing_position` and send the number of beats to move
 
 - playing_clip `playing_position` is observed at `/live_set/tracks/${TRACK_INDEX}/playing_clip/playing_position`
+
+- The following properties of `playing_clip` are sent out each time the `playing_clip` changes:
+	- playing_clip `name` is observed at `/live_set/tracks/${TRACK_INDEX}/playing_clip/name`
+	- playing_clip `playing_position` is observed at `/live_set/tracks/${TRACK_INDEX}/playing_clip/length`
+
+- Because selected scene returns an id, `selected_scene_index` has been created and is reached with `get` or `set`
+
+- Because of the complexity of creating a representation of the Live set from individual messages a helper function `getState` can be called as `/live_set ['get_state', true]`.  This returns a JSON formatted string that is a fairly complete state representation of the state of the Live set.
 
 ### Extra Notes
 - Because of a [bug](https://cycling74.com/forums/udpreceive-not-really-working-binding-for-osc/) with Max `tempToMaxChannel` and `tempToMaxMessage` are used to keep ports working.
