@@ -90,7 +90,7 @@ Send to the `toMaxMessage` port a message formatted in the following fashion: `/
 
 ### Extra Notes
 - Because of a [bug](https://cycling74.com/forums/udpreceive-not-really-working-binding-for-osc/) with Max `tempToMaxChannel` and `tempToMaxMessage` are used to keep ports working.
-- Because max [doesn't support multicasting](https://cycling74.com/forums/udp-multicast-messages-without-java) the `hosts` field is an array of the hosts to which you want to send messages.  Hostnames and IP addresses will both work.
+- Because Max [doesn't support multicasting](https://cycling74.com/forums/udp-multicast-messages-without-java) the `hosts` field is an array of the hosts to which you want to send messages.  Hostnames and IP addresses will both work.
 - This project also has some bonus Max patches (e.g. a visual equalizer) in the Max folder
 
 #### Required Software
