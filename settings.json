@@ -1,24 +1,25 @@
 {
   "networking": {
     "hosts": [
+      "0.0.0.0",
       "255.255.255.255"
     ],
-    "tempToMaxChannel": {
-      "port": 7071
+    "tempMaxGUIReceive": {
+      "port": 9090
     },
-    "tempToMaxMessage": {
-      "port": 7091
+    "tempMaxJSReceive": {
+      "port": 9091
     },
-    "toMaxChannel": {
+    "maxGUIReceive": {
       "port": 7000
     },
-    "toMaxMessage": {
+    "maxJSReceive": {
       "port": 7001
     },
-    "fromMaxChannel": {
+    "maxGUISend": {
       "port": 8000
     },
-    "fromMaxMessage": {
+    "maxJSSend": {
       "port": 8001
     }
   }
