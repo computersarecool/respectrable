@@ -14,6 +14,8 @@ function anything () {
     var apiObject = new LiveAPI(path.split('/').join(' '))
 
     outlet(0, 'id ' + apiObject.id)
+  } else if (messagename === 'tracks') {
+    makeChildren()
   }
 }
 
