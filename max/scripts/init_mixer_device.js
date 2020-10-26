@@ -1,3 +1,5 @@
+inlets = 1
+outlets = 1
 autowatch = 1
 
 var path = jsarguments[1]
@@ -22,7 +24,6 @@ function removeSends (maxObj) {
 function makeChildren () {
   'use strict'
 
-  var i
   var knobWidth = 34
   var splitPath = path.split('/')
   var pathArray = splitPath.join(' ')
@@ -32,7 +33,7 @@ function makeChildren () {
   // Remove and create sends
   this.patcher.apply(removeSends)
   var numSends = apiMixerDevice.getcount('sends')
-  for (i = 0; i < numSends; i += 1) {
+  for (var i = 0; i < numSends; i += 1) {
     this.patcher.newdefault(200, 200, 'bpatcher', 'live_device_parameter_send.maxpat', '@args', path + '/sends/' + i, i, '@presentation', 1, '@patching_rect', [1000 + i * knobWidth, 145, knobWidth, 39], '@presentation_rect', [knobWidth * (i % 2), knobWidth / 2 * i + (i / 2 * 5), knobWidth, 39], '@varname', 'sends' + i)
   }
 

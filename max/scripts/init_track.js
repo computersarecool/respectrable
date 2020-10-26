@@ -1,5 +1,5 @@
 inlets = 1
-outlets = 2
+outlets = 1
 autowatch = 1
 
 var path = jsarguments[1]
@@ -28,6 +28,7 @@ function makeChildren() {
   createMixerDevice(scriptingPath)
   createDevicelist(apiObject, scriptingPath)
 
+  // Make clips if not return or master track
   if (path.substring(0, 12) === '/live_set/tr') {
     createClipSlotsContainer(scriptingPath)
   }
@@ -53,7 +54,7 @@ function createDevicelist (apiObject, scriptingPath) {
   var numDevices = apiObject.getcount('devices')
 
   if (numDevices >= 1) {
-    this.patcher.newdefault(200, 200, 'bpatcher', 'devices_list.maxpat', '@args', '/' + scriptingPath, '@presentation', 1, '@border', 1, '@patching_rect', [932, 522, 210 * numDevices, 173], '@presentation_rect', [0, 400, 110, 188], '@enablehscroll', true, '@varname', 'devices_container')
+    this.patcher.newdefault(200, 200, 'bpatcher', 'live_devices_container.maxpat', '@args', '/' + scriptingPath, '@presentation', 1, '@border', 1, '@patching_rect', [932, 522, 210 * numDevices, 173], '@presentation_rect', [0, 400, 110, 188], '@enablehscroll', true, '@varname', 'devices_container')
   }
 }
 

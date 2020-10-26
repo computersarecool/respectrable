@@ -2,6 +2,7 @@ inlets = 1
 outlets = 1
 autowatch = 1
 
+var path = jsarguments[1]
 var trackSpacing = 50
 
 function anything () {
@@ -10,7 +11,6 @@ function anything () {
   if (messagename === 'bang') {
     makeChildren()
 
-    var path = jsarguments[1]
     var apiObject = new LiveAPI(path.split('/').join(' '))
 
     outlet(0, 'id ' + apiObject.id)

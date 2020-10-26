@@ -7,11 +7,7 @@ function anything () {
   'use strict'
 
   if (messagename === 'bang') {
-    var liveSet = this.patcher.getnamed('live_set')
-
-    if (liveSet) {
-      this.patcher.remove(liveSet)
-    }
+    this.patcher.remove(this.patcher.getnamed('live_set'))
 
     this.patcher.newdefault(200, 200, 'bpatcher', 'live_song.maxpat', '@args', '/live_set', '@presentation', 1, '@enablevscroll', 1, '@enablehscroll', 1, '@patching_rect', [33.5, 232, 1200, 591], '@presentation_rect', [0, 0, 613, 169], '@varname', 'live_set')
 
