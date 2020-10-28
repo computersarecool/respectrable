@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 34.0, 77.0, 1867.0, 1289.0 ],
+		"rect" : [ 42.0, 85.0, 1867.0, 1289.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -80,52 +80,6 @@
 				}
 
 			}
-, 			{
-				"box" : 				{
-					"args" : [ "/live_set/tracks/0/devices/0", 0 ],
-					"bgmode" : 0,
-					"border" : 0,
-					"clickthrough" : 0,
-					"enablehscroll" : 0,
-					"enablevscroll" : 0,
-					"id" : "obj-12",
-					"lockeddragscroll" : 0,
-					"maxclass" : "bpatcher",
-					"name" : "device.maxpat",
-					"numinlets" : 0,
-					"numoutlets" : 0,
-					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 33.0, 194.0, 203.0, 175.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 0.0, 0.0, 203.0, 175.0 ],
-					"varname" : "device0",
-					"viewvisibility" : 1
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"args" : [ "/live_set/tracks/0/devices/1", 1 ],
-					"bgmode" : 0,
-					"border" : 0,
-					"clickthrough" : 0,
-					"enablehscroll" : 0,
-					"enablevscroll" : 0,
-					"id" : "obj-14",
-					"lockeddragscroll" : 0,
-					"maxclass" : "bpatcher",
-					"name" : "device.maxpat",
-					"numinlets" : 0,
-					"numoutlets" : 0,
-					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 260.0, 194.0, 203.0, 175.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 215.0, 0.0, 203.0, 175.0 ],
-					"varname" : "device1",
-					"viewvisibility" : 1
-				}
-
-			}
  ],
 		"lines" : [ 			{
 				"patchline" : 				{
@@ -141,7 +95,16 @@
 				}
 
 			}
- ]
+ ],
+		"dependency_cache" : [ 			{
+				"name" : "init_devices.js",
+				"bootpath" : "~/Documents/projects/real/respectrable/max/scripts",
+				"patcherrelativepath" : "../scripts",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+ ],
+		"autosave" : 0
 	}
 
 }
