@@ -58,12 +58,12 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 34.0, 85.0, 226.0, 22.0 ],
 					"saved_object_attributes" : 					{
-						"filename" : "init_tracks_container.js",
+						"filename" : "init_tracks.js",
 						"parameter_enable" : 0
 					}
 ,
 					"style" : "",
-					"text" : "js init_tracks_container.js #1"
+					"text" : "js init_tracks.js #1"
 				}
 
 			}

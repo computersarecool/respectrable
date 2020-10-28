@@ -1,3 +1,4 @@
+inlets = 1
 outlets = 1
 autowatch = 1
 
@@ -7,12 +8,12 @@ function anything () {
   'use strict'
 
   if (messagename === 'bang') {
-    outputId();
+    outputId()
   }
 }
 
 function outputId () {
-  'use strict';
+  'use strict'
 
   var apiObject = new LiveAPI(path.split('/').join(' '))
   var indicator = this.patcher.getnamed('indicator')

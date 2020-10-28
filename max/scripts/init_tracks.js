@@ -26,9 +26,6 @@ function makeTracks () {
   'use strict'
 
   var trackIds
-  var bPatcherYP = 176
-  var bPatcherW = 121
-  var bPatcherH = 591
   var liveSet = new LiveAPI('live_set')
 
   this.patcher.apply(removeTracks)
@@ -49,6 +46,6 @@ function makeTracks () {
 
   for (var i = 0; i < trackIds.length; i += 1) {
     var currentTrack = new LiveAPI('id ' + trackIds[i])
-    this.patcher.newdefault(200, 200, 'bpatcher', 'live_track.maxpat', '@args', '/' + currentTrack.unquotedpath.split(' ').join('/'), i, '@presentation', 1, '@border', 1, '@patching_rect', [i * bPatcherW + (i * 30) + 20, bPatcherYP, bPatcherW, bPatcherH], '@presentation_rect', [i * bPatcherW, 0, bPatcherW, bPatcherH], '@varname', trackIds.length > 1 ? scriptingName + i : scriptingName)
+    this.patcher.newdefault(200, 200, 'bpatcher', 'live_track.maxpat', '@args', '/' + currentTrack.unquotedpath.split(' ').join('/'), i, '@presentation', 1, '@border', 1, '@patching_rect', [i * 121 + (i * 30) + 20, 176, 121, 595], '@presentation_rect', [i * 121, 0, 121, 595], '@varname', trackIds.length > 1 ? scriptingName + i : scriptingName)
   }
 }

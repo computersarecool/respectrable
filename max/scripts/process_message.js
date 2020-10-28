@@ -58,12 +58,12 @@ function anything () {
 
   // Check if there is a list of arguments
   if (arguments.length > 3) {
-    var args = Array.prototype.slice.call(arguments);
+    var args = Array.prototype.slice.call(arguments)
     valueOrArgs = args.slice(2, arguments.length)
   }
 
-  var returnArray = ['/' + path.split(' ').join('/'), propertyOrFunc]
   var returnValue
+  var returnArray = ['/' + path.split(' ').join('/'), propertyOrFunc]
 
   // Access an element of the Live set
   switch (messageType) {
@@ -71,8 +71,7 @@ function anything () {
     case 'get':
       returnValue = apiObj.get(propertyOrFunc)
       returnArray = validateReturnValue(returnArray, returnValue)
-      if (!returnArray)
-      {
+      if (!returnArray) {
         return
       }
       break
@@ -82,8 +81,7 @@ function anything () {
       apiObj.set(propertyOrFunc, valueOrArgs)
       returnValue = apiObj.get(propertyOrFunc)
       returnArray = validateReturnValue(returnArray, returnValue)
-      if (!returnArray)
-      {
+      if (!returnArray) {
         return
       }
       break
@@ -92,8 +90,7 @@ function anything () {
     case 'call':
       returnValue = apiObj.call(propertyOrFunc, valueOrArgs)
       returnArray = validateReturnValue(returnArray, returnValue)
-      if (!returnArray)
-      {
+      if (!returnArray) {
         return
       }
       break
@@ -102,8 +99,7 @@ function anything () {
     case 'getcount':
       returnValue = apiObj.getcount(propertyOrFunc)
       returnArray = validateReturnValue(returnArray, returnValue)
-      if (!returnArray)
-      {
+      if (!returnArray) {
         return
       }
       break
@@ -112,8 +108,7 @@ function anything () {
     case 'property':
       returnValue = apiObj[propertyOrFunc]
       returnArray = validateReturnValue(returnArray, returnValue)
-      if (!returnArray)
-      {
+      if (!returnArray) {
         return
       }
       break

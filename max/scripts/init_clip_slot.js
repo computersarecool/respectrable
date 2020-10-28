@@ -1,29 +1,21 @@
+inlets = 1
+outlets = 1
 autowatch = 1
 
-var parentPath = jsarguments[1]
+var path = jsarguments[1]
 
 function anything () {
   'use strict'
 
   if (messagename === 'bang') {
-    createClip()
+    var apiObject = new LiveAPI(path.split('/').join(' '))
+
+    this.patcher.remove(this.patcher.getnamed('clip'))
+
+    if (apiObject.get('has_clip')[0]) {
+      this.patcher.newdefault(200, 200, 'bpatcher', 'live_clip.maxpat', '@args', path + '/clip', '@presentation', 1, '@patching_rect', [726, 224, 125, 33], '@presentation_rect', [0, 0, 144, 26], '@varname', 'clip')
+    }
+
+    outlet(0, 'id ' + apiObject.id)
   }
 }
-
-function createClip () {
-  'use strict'
-
-  var path = parentPath.split('/').join(' ')
-  var apiClip = new LiveAPI(path)
-  
-  this.patcher.remove(this.patcher.getnamed('clip'))
-  if (apiClip.get('has_clip')[0]) {
-  	var clipPatch = this.patcher.newdefault(200, 200, 'bpatcher', 'live_clip.maxpat', '@args', parentPath + '/clip', '@presentation', 1, '@patching_rect', [295, 171, 125, 33], '@presentation_rect', [0, 0, 125, 33], '@varname', 'clip')
-  	this.patcher.connect(this.patcher.getnamed('clipSlotRouter'), 3, clipPatch, 0)
-    this.patcher.connect(this.patcher.getnamed('clip_playing'), 0, clipPatch, 1)
-    this.patcher.connect(this.patcher.getnamed('clip_not_playing'), 0, clipPatch, 1)
-  }
-  
-  outlet(0, 'id ' + apiClip.id)
-}
-

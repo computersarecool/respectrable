@@ -1,5 +1,5 @@
-/* global LiveAPI */
-
+inlets = 1
+outlets = 1
 autowatch = 1
 
 // This script gets an incomplete representation of the Live set state
