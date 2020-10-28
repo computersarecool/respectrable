@@ -35,11 +35,11 @@ function makeParameters () {
   this.patcher.apply(removeParameters)
   this.patcher.getnamed('deviceLabel').message('set', apiObject.get('name'))
 
-  // Skip Device on (first) and Chain Selector (last)
+  // Skip Device On (first) and Chain Selector (last)
   for (var j = 1; j < parameters.length - 1; j += 1) {
     var i = j - 1
     var xOffset = knobWidth * (i % 4)
     var yOffset = Math.floor(i / 4) * knobHeight
-    this.patcher.newdefault(200, 200, 'bpatcher', 'live_device_parameter.maxpat', '@args', path + '/parameters/' + i, '@presentation', 1, '@patching_rect', [19 + xOffset, 525 + yOffset, 52, knobHeight], '@presentation_rect', [5 + xOffset, 19 + yOffset, 52, knobHeight], '@varname', 'parameter' + i)
+    this.patcher.newdefault(200, 200, 'bpatcher', 'live_device_parameter.maxpat', '@args', path + '/parameters/' + j, '@presentation', 1, '@patching_rect', [19 + xOffset, 525 + yOffset, 52, knobHeight], '@presentation_rect', [5 + xOffset, 19 + yOffset, 52, knobHeight], '@varname', 'parameter' + j)
   }
 }

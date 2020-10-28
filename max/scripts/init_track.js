@@ -45,7 +45,7 @@ function createMixerDevice (scriptingPath) {
 function createClipSlotsContainer (scriptingPath) {
   'use strict'
 
-  this.patcher.newdefault(200, 200, 'bpatcher', 'clip_slots.maxpat', '@args', '/' + scriptingPath, '@presentation', 1, '@enablevscroll', 1, '@border', 1, '@patching_rect', [730, 522, 129, 173], '@presentation_rect', [0, 26, 120, 135], '@enablehscroll', true, '@varname', 'clip_slots_container')
+  this.patcher.newdefault(200, 200, 'bpatcher', 'live_clip_slots_container.maxpat', '@args', '/' + scriptingPath, '@presentation', 1, '@enablevscroll', 1, '@border', 1, '@patching_rect', [730, 522, 129, 173], '@presentation_rect', [0, 26, 120, 135], '@enablehscroll', true, '@varname', 'clip_slots_container')
 }
 
 function createDevicelist (apiObject, scriptingPath) {
@@ -54,7 +54,7 @@ function createDevicelist (apiObject, scriptingPath) {
   var numDevices = apiObject.getcount('devices')
 
   if (numDevices >= 1) {
-    this.patcher.newdefault(200, 200, 'bpatcher', 'live_devices_container.maxpat', '@args', '/' + scriptingPath, '@presentation', 1, '@border', 1, '@patching_rect', [932, 522, 210 * numDevices, 173], '@presentation_rect', [0, 400, 110, 188], '@enablehscroll', true, '@varname', 'devices_container')
+    this.patcher.newdefault(200, 200, 'bpatcher', 'live_devices_container.maxpat', '@args', '/' + scriptingPath, '@presentation', 1, '@border', 1, '@patching_rect', [932, 522, 220 * numDevices, 188], '@presentation_rect', [0, 400, 129, 197], '@enablehscroll', true, '@varname', 'devices_container')
   }
 }
 
