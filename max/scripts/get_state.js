@@ -25,7 +25,7 @@ var clip = {
   children: null
 }
 
-var clipSlots = {
+var clip_slots = {
   properties: [
     'has_clip'
   ],
@@ -64,7 +64,6 @@ var devices = {
 var tracks = {
   properties: [
     'color',
-    'has_audio_input',
     'output_meter_left',
     'output_meter_right',
     'mute',
@@ -76,11 +75,11 @@ var tracks = {
   children: {
     devices: devices,
     mixer_device: mixerDevice,
-    clip_slots: clipSlots
+    clip_slots: clip_slots
   }
 }
 
-var returnTracks = {
+var return_tracks = {
   properties: [
     'has_audio_input',
     'color',
@@ -91,7 +90,7 @@ var returnTracks = {
   children: tracks.children
 }
 
-var masterTrack = {
+var master_track = {
   properties: [
     'color',
     'has_audio_input',
@@ -100,7 +99,7 @@ var masterTrack = {
   children: tracks.children
 }
 
-var liveSet = {
+var live_set = {
   properties: [
     'clip_trigger_quantization',
     'current_song_time',
@@ -109,13 +108,13 @@ var liveSet = {
   ],
   children: {
     tracks: tracks,
-    return_tracks: returnTracks,
-    master_track: masterTrack
+    return_tracks: return_tracks,
+    master_track: master_track
   }
 }
 
-var liveApp = {
-  functions : [
+var live_app = {
+  functions: [
     'get_major_version',
     'get_minor_version',
     'get_bugfix_version'
@@ -127,7 +126,7 @@ function getState () {
   'use strict'
 
   getAppState()
-  getAllState('live_set', liveSet)
+  getAllState('live_set', live_set)
   return LOM
 }
 
@@ -137,7 +136,7 @@ function getAppState () {
   var appObj = {}
   var liveAppAPI = new LiveAPI('live_app')
 
-  liveApp.functions.forEach(function (item) {
+  live_app.functions.forEach(function (item) {
     appObj[item] = liveAppAPI.call(item)
   })
 

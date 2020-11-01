@@ -7,50 +7,56 @@ var path = jsarguments[1]
 function anything () {
   'use strict'
 
+  var apiObject = new LiveAPI(path.split('/').join(' '))
+
   if (messagename === 'bang') {
     makeChildren()
-
-    var apiObject = new LiveAPI(path.split('/').join(' '))
-
     outlet(0, 'id ' + apiObject.id)
+  } else if (messagename === 'devices') {
+    createDevicelist()
+  } else if (messagename === 'clip_slots') {
+    createClipSlotsContainer()
   }
 }
 
-function makeChildren() {
-  var apiObject = new LiveAPI(path.split('/').join(' '))
-  var scriptingPath = apiObject.path.split(' ').join('/')
-
-  // Remove children
-  this.patcher.remove(this.patcher.getnamed('mixer_device'))
-  this.patcher.remove(this.patcher.getnamed('devices_container'))
-  this.patcher.remove(this.patcher.getnamed('clip_slots_container'))
-
-  createMixerDevice(scriptingPath)
-  createDevicelist(apiObject, scriptingPath)
-
-  // Make clips if not return or master track
-  if (path.substring(0, 12) === '/live_set/tr') {
-    createClipSlotsContainer(scriptingPath)
-  }
-
-  updateGUI(apiObject)
-}
-
-function createMixerDevice (scriptingPath) {
+function makeChildren () {
   'use strict'
 
+  createMixerDevice()
+  createDevicelist()
+  createClipSlotsContainer()
+
+  updateGUI()
+}
+
+function createMixerDevice () {
+  'use strict'
+
+  var apiObject = new LiveAPI(path.split('/').join(' '))
+  var scriptingPath = apiObject.path.split(' ').join('/')
+  this.patcher.remove(this.patcher.getnamed('mixer_device'))
   this.patcher.newdefault(200, 200, 'bpatcher', 'live_mixer_device.maxpat', '@args', '/' + scriptingPath + '/mixer_device', '@presentation', 1, '@border', 1, '@patching_rect', [496, 522, 129, 198], '@presentation_rect', [0, 187, 129, 198], '@varname', 'mixer_device')
 }
 
-function createClipSlotsContainer (scriptingPath) {
+function createClipSlotsContainer () {
   'use strict'
 
-  this.patcher.newdefault(200, 200, 'bpatcher', 'live_clip_slots.maxpat', '@args', '/' + scriptingPath, '@presentation', 1, '@enablevscroll', 1, '@border', 1, '@patching_rect', [730, 522, 129, 173], '@presentation_rect', [0, 26, 120, 135], '@enablehscroll', true, '@varname', 'clip_slots_container')
+  var apiObject = new LiveAPI(path.split('/').join(' '))
+  var scriptingPath = apiObject.path.split(' ').join('/')
+  this.patcher.remove(this.patcher.getnamed('clip_slots_container'))
+
+  // Make clips if not return or master track
+  if (path.substring(0, 12) === '/live_set/tr') {
+    this.patcher.newdefault(200, 200, 'bpatcher', 'live_clip_slots.maxpat', '@args', '/' + scriptingPath, '@presentation', 1, '@enablevscroll', 1, '@border', 1, '@patching_rect', [730, 522, 129, 173], '@presentation_rect', [0, 26, 120, 135], '@enablehscroll', true, '@varname', 'clip_slots_container')
+  }
 }
 
-function createDevicelist (apiObject, scriptingPath) {
+function createDevicelist () {
   'use strict'
 
+  var apiObject = new LiveAPI(path.split('/').join(' '))
+  var scriptingPath = apiObject.path.split(' ').join('/')
+  this.patcher.remove(this.patcher.getnamed('devices_container'))
   var numDevices = apiObject.getcount('devices')
 
   if (numDevices >= 1) {
@@ -58,9 +64,10 @@ function createDevicelist (apiObject, scriptingPath) {
   }
 }
 
-function updateGUI (apiObject) {
+function updateGUI () {
   'use strict'
 
+  var apiObject = new LiveAPI(path.split('/').join(' '))
   var maxTrackColor
   var trackLabel = this.patcher.getnamed('track_label')
   var trackName = apiObject.get('name')[0]

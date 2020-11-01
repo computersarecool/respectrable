@@ -7,8 +7,11 @@ var path = jsarguments[1]
 function anything () {
   'use strict'
 
+  var apiObject = new LiveAPI(path.split('/').join(' '))
+
   if (messagename === 'bang') {
     makeChildren()
+    outlet(0, 'id ' + apiObject.id)
   }
 }
 

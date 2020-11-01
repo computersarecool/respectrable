@@ -1,18 +1,6 @@
 # Respectrable
 *Bi-directional communication with Ableton Live via Max for Live*
 
-#### TODO:
-Reachable means (get, set, call work and necessary children and properties observed)
-[x] Live App fully reachable and tested
-[ ] Live Song fully reachable
-[ ] Live Song.View fully reachable
-[ ] Tracks fully reachable
-[ ] Scene fully reachable
-[ ] Device fully reachable
-[ ] Device parameters fully reachable
-[ ] Mixer device fully reachable
-[ ] Clip slots fully reachable
-
 ## Description
 The first goal with this project is to create a system where any property of a Live set can be changed by sending an [Open Sound Control (OSC)](http://opensoundcontrol.org/introduction-osc) message to the Ableton Live API.
 The second goal is to create a system where any change made to a Live set sends an OSC notification.
