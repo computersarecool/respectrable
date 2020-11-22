@@ -385,19 +385,6 @@
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-19",
-					"maxclass" : "newobj",
-					"numinlets" : 2,
-					"numoutlets" : 2,
-					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 266.0, 141.0, 55.0, 22.0 ],
-					"style" : "",
-					"text" : "zl slice 2"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-27",
 					"maxclass" : "newobj",
 					"numinlets" : 2,
@@ -759,7 +746,7 @@
 , 			{
 				"box" : 				{
 					"align" : 0,
-					"bgcolor" : [ 0.74902, 0.984314, 0.0, 0.0 ],
+					"bgcolor" : [ 0.011765, 0.011765, 1.0, 1.0 ],
 					"fontface" : 1,
 					"fontsize" : 11.0,
 					"id" : "obj-18",
@@ -773,7 +760,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 24.0, 3.0, 277.0, 20.0 ],
 					"style" : "",
-					"text" : "",
+					"text" : "Play It All Night Long",
 					"textjustification" : 0,
 					"textoncolor" : [ 0.0, 0.0, 0.0, 1.0 ],
 					"varname" : "clip_ui"
@@ -865,14 +852,6 @@
 				"patchline" : 				{
 					"destination" : [ "obj-13", 0 ],
 					"source" : [ "obj-17", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-2", 0 ],
-					"midpoints" : [ 275.5, 230.0, 105.5, 230.0 ],
-					"source" : [ "obj-19", 0 ]
 				}
 
 			}
@@ -1068,8 +1047,8 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-19", 0 ],
-					"midpoints" : [ 226.166667, 129.0, 275.5, 129.0 ],
+					"destination" : [ "obj-2", 0 ],
+					"midpoints" : [ 226.166667, 123.0, 287.0, 123.0, 287.0, 363.0, 105.5, 363.0 ],
 					"source" : [ "obj-8", 2 ]
 				}
 
