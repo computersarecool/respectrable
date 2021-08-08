@@ -1,87 +1,124 @@
 # Respectrable
-*Bi-directional communication with Ableton Live via Max for Live*
+*Bidirectional communication with Ableton Live via Max for Live*
 
 ## Description
-The first goal with this project is to create a system where any property of a Live set can be changed by sending an [Open Sound Control (OSC)](http://opensoundcontrol.org/introduction-osc) message to the Ableton Live API.
-The second goal is to create a system where any change made to a Live set sends an OSC notification to notify external software.
+The first goal with this project is to create a system where any property of a Live set can be changed by sending an [Open Sound Control (OSC)](http://opensoundcontrol.org/introduction-osc) message to the Ableton Live.
 
-In this way a Live set can control -- or be controlled by -- anything that uses OSC.
+The second goal is to create a system where Live sends an OSC message when any property of a set changes.
 
-Respectrable is a Max for Live device that facilitates this. In the rest of this README "respectrable" refers to the Max for Live device.
+In this way a Live set can control -- or be controlled by -- anything that supports OSC messaging.
+
+Respectrable is a Max for Live device that facilitates this. 
+
+In the rest of this README "respectrable" refers to the Max for Live device.
 
 [![Respectrable demo screen capture](https://i.imgur.com/IFKorea.jpg)](https://www.youtube.com/watch?time_continue=2&v=L1oF4Amrf9k "Respectrable demo screen capture")
 
 ## Tested On
-- Windows (but should work on MacOS as well)
-- Max for Live 7
+- Windows
+- Ableton Live 9
+- Max for Live 8
 
 ## To Use
-- Add the folder containing this repo to Max's [search path](https://docs.cycling74.com/max7/vignettes/search_path).
+- Add the folder containing this repo to Max's [search path](https://docs.cycling74.com/max8/vignettes/search_path).
 
 - Add `respectrable.amxd` (located in the `max` directory) to the master track on a Live set.
 
-- Send OSC messages (formatted as described below) to the `toMaxChannel` and `toMaxMessage` ports specified in the `settings.json` file.
+- Send OSC messages (formatted as described below) to the ports specified in the `settings.json` file.
 
 ## Project Structure
 - The `max` folder contains all of the Max for Live code and patches.
+- The `test` folder contains a Live set and TouchDesigner project used for testing.
 
 ## Functionality
-### Setting Property Values
-- When added to a track respectrable creates Max objects representing the Live set. These can be seen in the respectrable Max object.
-Some of the Live set is reachable through these Max objects but not every element in the Live Object Model can be reached. 
+Max for Live can access properties in Ableton Live in two different ways.
 
-`Song.View`, `CuePoint`, `Chain` and `Drumpad` classes (as well as their children) can not currently be reached through Max Objects.
+There is [a Javascript API](https://docs.cycling74.com/max8/vignettes/jsliveapi) and there are also [native Max objects](https://docs.cycling74.com/max8/vignettes/live_api_overview) which can access properties of a Live set.
 
-- To reach these classes messages should be sent via the Javascript API which [might perform worse](https://cycling74.com/forums/javascript-performance-vs-max-objects/) but can reach every element and property of a Live set
-- The two different message types (Native Max Objects and Javascript) should be sent to the ports specified in the `hosts` section of the `settings.json` file
+Using Max objects [might perform better](https://cycling74.com/forums/javascript-performance-vs-max-objects/) but an object would have to be created for every instance of every live object class.
+
+Therefore respectrable creates objects for many but not every class of a Live set.
+
+Similarly, many but not all live properties are observed with [live.observer](https://docs.cycling74.com/max8/refpages/live.observer) objects.
+
+The two different message types should be sent to the ports corresponding to the following keys in the `networking` section of the `settings.json` file:
+
+- respectrable listens for native object messages: `toMaxObject`
+- respectrable listens for Javascript  messages: `toMaxJs`
+- respectrable sends messages to: `fromMax`
+
+### Accessing and Changing Live Set Properties and Functions
+
+#### `get`, `set`, and `call`
+
+- To `set` or `get` a property or to `call` a function send an OSC message in the following format: 
+    
+    `/canonical_path [messageType, property, (value)]`
+
+`canonical_path` is the OSC address (which is the same as the LOM Canonical path with slashes instead of spaces).
+
+`messageType` is the first OSC argument and is either `set`, `get` or `call`.
+
+`property` is the second OSC argument and is either the name of the property that is being set or queried or the name of the function to call.
+
+`value` is the third OSC argument and should only be included in a set message in which case it is the value to set.
+
+Example Messages:
+
+- `/live_set/tracks/0 ["get", "color"]`
+- `/live_set/tracks/0 ["set", "color", 3947580]`
+- `/live_set/tracks/0 ["call", "stop_all_clips"]`
+
+Corresponding Responses:
+
+- `/live_set/tracks/0 ["color", 3217580]`
+- `/live_set/tracks/0 ["color", 3947580]`
+- `/live_set/tracks/0 ["stop_all_clips", "id", "0"]`
+
+**Note:** Certain properties are considered "LiveAPI" properties (i.e. `id` and `path`). 
+These are different than other property (see the [LOM documentation](https://docs.cycling74.com/max8/vignettes/jsliveapi#LiveAPI_Properties) for details) and can only be reached by using Javascript messages. 
+
+Additionally, responses to function calls may not always have useful output.
 
 ### Observed Property Values
-For each of the following classes, certain properties or children are observed
-- `Song`: `[tempo, clip_trigger_quantization, tracks]`
-- `Track`: `[solo, color, playing_slot_index, fired_slot_index, devices, clip_slots]`
-- `MixerDevice`: `[volume, activator, panning] (value for all)`
-- `ClipSlot`: `[has_clip, is_playing]`
-- `Clip`: `[is_playing, name, pitch_coarse, playing_position]`
-- `Device`: `[name, is_active]`
-- `DeviceParameter`: `[name, value]`
-  
-- After initialization the current value for each property that is observed will be sent to the `fromMaxChannel` port in the following format: `/canonical_path value`
-    e.g. `/live_set/tracks/output_meter_left 0.5`
+The following properties or children are observed using [live.observer objects](https://docs.cycling74.com/max5/refpages/m4l-ref/live.observer.html).
 
-  - Any time an observed property changes its current value will be sent to the `fromMaxChannel` port.
+This means that whenever values change (even if directly through the Live GUI) a message with the new property's value will be sent from respectrable with the new value.
 
-### `get`, `set`, and `call`
-- To `set` or `get` a property or to `call` a function send an OSC message to either the `toMaxChannel` port in the following format:
-  `/canonical_path [messageType, property, (value)]`
+- **Song**: `tempo, clip_trigger_quantization, tracks`
+- **Track**: `solo, color, playing_slot_index, fired_slot_index, devices, clip_slots`
+- **MixerDevice**: `volume, activator, panning`
+- **ClipSlot**: `has_clip, is_playing`
+- **Clip**: `is_playing, name, pitch_coarse, playing_position`
+- **Device**: `name, is_active`
+- **DeviceParameter**: `name, value`
 
+# TODO: Check this
+After initialization the current value for each property that is observed will be sent to the `fromMaxChannel` port in the following format: 
+    
+    /canonical_path [property, value]
 
-- `canonical_path` is the OSC address (which is the same as the LOM Canonical path)
-- `messageType` is the first OSC argument and is either `set`, `get`, `call` or `property`. (Some properties are considered "LiveAPI" properties (i.e. `id` and `path`). These are different than other properties (see LOM for details). These properties should use the messageType of `property`
-- `property` is the second OSC argument and is either the name of the property that is being set or queried or the name of the function to call
-- `value` is the third OSC argument and should only be included in a set message in which case it is the value to set
+Example: `/live_set/tracks ["output_meter_left", 0.5]`
 
-    Examples:
-    - `/live_set/tracks/0 'get' 'color'`
-    - `/live_set/tracks/0 'set' 'color' 3947580`
-    - `/live_set/tracks/0 'call' 'stop_all_clips'`
-
-### Using the Javascript API
-Some parts of a Live project are not reachable from the GUI objects. To reach these use the Javascript messages.
-
-Send to the `toMaxMessage` port a message formatted in the same format as above (`/canonical_path [messageType, property, (value)]`)
-
-Responses will be sent to the `fromMaxMessage` port
+#### Classes (and their children) not reachable by native Max objects
+Javascript messages must be used to reach the following classes:
+- `Song.View`
+- `CuePoint`
+- `Chain` 
+- `Drumpad`
+- `ControlSurface`
 
 ### Extra Notes
-- Because of a [port binding](https://cycling74.com/forums/udpreceive-not-really-working-binding-for-osc/) with Max `tempToMaxChannel` and `tempToMaxMessage` are used to keep ports working during editing.
-- Because Max [doesn't support multicasting](https://cycling74.com/forums/udp-multicast-messages-without-java) the `hosts` field is an array of the hosts to which you want to send messages.  Hostnames and IP addresses will both work.
+- Because of a [port binding issue](https://cycling74.com/forums/udpreceive-not-really-working-binding-for-osc/) `temp` ports are used to keep ports working in Max during editing.
+
+- Because Max [doesn't support multicasting](https://cycling74.com/forums/udp-multicast-messages-without-java) the `hosts` field is an array of the hosts to which you want to send messages. Hostnames and IP addresses both work.
 
 #### Required Software
-- Ableton Live 9+
+- Ableton Live
 - Max for Live
 
 #### References
-- [Live Object Model](https://docs.cycling74.com/max7/vignettes/live_object_model) (essential to understand)
+- [Live Object Model](https://docs.cycling74.com/max7/vignettes/live_object_model) (This is essential to understand)
 
 ### License
 

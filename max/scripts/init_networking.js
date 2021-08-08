@@ -2,6 +2,11 @@ autowatch = 1
 
 var settings
 var settingsFilePath = '..\\..\\..\\settings.json'
+var tempToMaxObjectKey = 'tempToMaxObject'
+var tempToMaxJsKey = 'tempToMaxJs'
+var toMaxObjectKey = 'toMaxObject'
+var toMaxJsKey = 'toMaxJs'
+var fromMaxKey = 'fromMax'
 
 // This function is called by the live.thisdevice in Max when the Live API is ready
 function anything () {
@@ -42,24 +47,21 @@ function removeObjects (maxObj) {
 }
 
 // Set UDP receive ports to what is in the settings file
-function changePorts (networkGUIReceiver, networkJSReceiver) {
-  networkJSReceiver.message('port', settings.maxJSReceive.port)
-  networkGUIReceiver.message('port', settings.maxGUIReceive.port)
+function changePorts (objectReceiver, jsReceiver) {
+  objectReceiver.message('port', settings[toMaxJsKey].port)
+  jsReceiver.message('port', settings[toMaxObjectKey].port)
 }
 
-// Create all UDP objects
+// Recreate all UDP objects
 function initializeNetwork () {
   'use strict'
 
   var MAX_QUEUE = 1024
   var MAX_PACKET = 39936
-  var JS_SEND_Y = 102
-  var GUI_SEND_Y = 230
+  var SEND_Y = 102
   var SEND_START_X = 473
   var SEND_WIDTH = 133
   var DELAY_MS = 200
-
-  // Get permanent objects within patch
   var networkPatch = this.patcher
   var localJSReceiver = networkPatch.getnamed('local_js_receiver')
   var localGUIReceiver = networkPatch.getnamed('local_gui_receiver')
@@ -69,22 +71,18 @@ function initializeNetwork () {
 
   // Create the UDP senders
   settings.hosts.forEach(function (hostname, index) {
-    var networkJSSender = networkPatch.newdefault(SEND_START_X + (index * SEND_WIDTH), JS_SEND_Y, 'udpsend', hostname, settings.maxJSSend.port)
-    networkJSSender.message('maxqueuesize', MAX_QUEUE)
-    networkJSSender.message('maxpacketsize', MAX_PACKET)
-    networkPatch.connect(localJSReceiver, 0, networkJSSender, 0)
-
-    var networkGUISender = networkPatch.newdefault(SEND_START_X + (index * SEND_WIDTH), GUI_SEND_Y, 'udpsend', hostname, settings.maxGUISend.port)
-    networkGUISender.message('maxqueuesize', MAX_QUEUE)
-    networkGUISender.message('maxpacketsize', MAX_PACKET)
-    networkPatch.connect(localGUIReceiver, 0, networkGUISender, 0)
+    var networkSender = networkPatch.newdefault(SEND_START_X + (index * SEND_WIDTH), SEND_Y, 'udpsend', hostname, settings[fromMaxKey].port)
+    networkSender.message('maxqueuesize', MAX_QUEUE)
+    networkSender.message('maxpacketsize', MAX_PACKET)
+    networkPatch.connect(localJSReceiver, 0, networkSender, 0)
+    networkPatch.connect(localGUIReceiver, 0, networkSender, 0)
   })
 
   // Create UDP receivers
-  var networkJSReceiver = networkPatch.newdefault(330, 60, 'udpreceive', settings.tempMaxJSReceive.port)
+  var networkJSReceiver = networkPatch.newdefault(330, 60, 'udpreceive', settings[tempToMaxJsKey].port)
   networkPatch.connect(networkJSReceiver, 0, networkPatch.getnamed('incoming_message_inlet'), 0)
 
-  var networkGUIReceiver = networkPatch.newdefault(200, 60, 'udpreceive', settings.tempMaxGUIReceive.port)
+  var networkGUIReceiver = networkPatch.newdefault(200, 60, 'udpreceive', settings[tempToMaxObjectKey].port)
   networkPatch.connect(networkGUIReceiver, 0, networkPatch.getnamed('incoming_channel_inlet'), 0)
 
   // Send a delayed update to unbind ports in Max

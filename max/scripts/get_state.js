@@ -2,12 +2,12 @@ inlets = 1
 outlets = 1
 autowatch = 1
 
-// This script gets an incomplete representation of the Live set state
+// This script gets a partial representation of the Live set state
 
-// LOM is returned by getState
+// This object is returned by getState
 var LOM = {}
 
-// These are all the children / properties we want to query when getState is called
+// All the children / properties we want to query when getState is called
 var clip = {
   properties: [
     'has_audio_input',
