@@ -48,8 +48,8 @@ function removeObjects (maxObj) {
 
 // Set UDP receive ports to what is in the settings file
 function changePorts (objectReceiver, jsReceiver) {
-  objectReceiver.message('port', settings[toMaxJsKey].port)
-  jsReceiver.message('port', settings[toMaxObjectKey].port)
+  objectReceiver.message('port', settings[toMaxObjectKey].port)
+  jsReceiver.message('port', settings[toMaxJsKey].port)
 }
 
 // Recreate all UDP objects
