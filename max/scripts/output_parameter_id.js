@@ -1,3 +1,6 @@
+/* global post, messagename, outlet, LiveAPI, jsarguments */
+// Used to output device parameter ids
+
 inlets = 1
 outlets = 1
 autowatch = 1
