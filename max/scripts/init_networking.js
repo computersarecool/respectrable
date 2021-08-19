@@ -1,3 +1,5 @@
+/* global post, messagename, outlet, LiveAPI, jsarguments */
+
 autowatch = 1
 
 var settings
@@ -31,13 +33,14 @@ function readSettings (filePath) {
     }
     inFile.close()
     return JSON.parse(settingsString).networking
+
   } else {
     throw new Error('Could not read JSON file')
   }
 }
 
 // Remove all UDP objects
-function removeObjects (maxObj) {
+function removeUdpObjects (maxObj) {
   'use strict'
 
   if (maxObj.maxclass.substring(0, 3) === 'udp') {
@@ -46,7 +49,7 @@ function removeObjects (maxObj) {
   }
 }
 
-// Set UDP receive ports to what is in the settings file
+// Set UDP receive ports
 function changePorts (objectReceiver, jsReceiver) {
   objectReceiver.message('port', settings[toMaxObjectKey].port)
   jsReceiver.message('port', settings[toMaxJsKey].port)
@@ -66,10 +69,10 @@ function initializeNetwork () {
   var localJSReceiver = networkPatch.getnamed('local_js_receiver')
   var localGUIReceiver = networkPatch.getnamed('local_gui_receiver')
 
-  // Remove the UDP objects
-  networkPatch.apply(removeObjects)
+  // Remove UDP objects
+  networkPatch.apply(removeUdpObjects)
 
-  // Create the UDP senders
+  // Create UDP senders
   settings.hosts.forEach(function (hostname, index) {
     var networkSender = networkPatch.newdefault(SEND_START_X + (index * SEND_WIDTH), SEND_Y, 'udpsend', hostname, settings[fromMaxKey].port)
     networkSender.message('maxqueuesize', MAX_QUEUE)

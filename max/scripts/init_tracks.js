@@ -1,3 +1,5 @@
+/* global post, messagename, outlet, LiveAPI, jsarguments */
+
 inlets = 1
 outlets = 1
 autowatch = 1
@@ -9,7 +11,7 @@ function anything () {
   'use strict'
 
   if (messagename === 'bang') {
-    makeTracks()
+    recreateChildren()
   }
 }
 
@@ -22,7 +24,7 @@ function removeTracks (maxObj) {
   }
 }
 
-function makeTracks () {
+function recreateChildren () {
   'use strict'
 
   var trackIds
@@ -46,6 +48,9 @@ function makeTracks () {
 
   for (var i = 0; i < trackIds.length; i += 1) {
     var currentTrack = new LiveAPI('id ' + trackIds[i])
-    this.patcher.newdefault(200, 200, 'bpatcher', 'live_track.maxpat', '@args', '/' + currentTrack.unquotedpath.split(' ').join('/'), i, '@presentation', 1, '@border', 1, '@patching_rect', [i * 121 + (i * 30) + 20, 176, 121, 595], '@presentation_rect', [i * 121, 0, 121, 595], '@varname', trackIds.length > 1 ? scriptingName + i : scriptingName)
+
+    this.patcher.newdefault(200, 200, 'bpatcher', 'live_track.maxpat', '@args', '/' + currentTrack.unquotedpath.split(' ').join('/'),
+      i, '@presentation', 1, '@border', 1, '@patching_rect', [i * 121 + (i * 30) + 20, 176, 121, 595], '@presentation_rect',
+      [i * 121, 0, 121, 595], '@varname', trackIds.length > 1 ? scriptingName + i : scriptingName)
   }
 }
