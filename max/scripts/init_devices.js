@@ -1,3 +1,5 @@
+/* global post, messagename, outlet, LiveAPI, jsarguments */
+
 inlets = 1
 outlets = 1
 autowatch = 1
@@ -9,7 +11,7 @@ function anything () {
   'use strict'
 
   if (messagename === 'bang') {
-    makeDevices()
+    recreateDevices()
   }
 }
 
@@ -22,7 +24,7 @@ function removeDevices (maxObj) {
   }
 }
 
-function makeDevices () {
+function recreateDevices () {
   'use strict'
 
   var apiObject = new LiveAPI(path.split('/').join(' '))
@@ -32,7 +34,9 @@ function makeDevices () {
 
   if (numDevices) {
     for (var i = 0; i < numDevices; i += 1) {
-      this.patcher.newdefault(200, 200, 'bpatcher', 'live_device.maxpat', '@args', path + '/devices/' + i, i, '@presentation', 1, '@patching_rect', [33 + 227 * i, 194, 219, 188], '@presentation_rect', [i * 215, 0, 220, 188], '@varname', scriptingBaseName + i)
+      this.patcher.newdefault(200, 200, 'bpatcher', 'live_device.maxpat', '@args', path + '/devices/' + i, i,
+        '@presentation', 1, '@patching_rect', [33 + 227 * i, 194, 219, 188], '@presentation_rect', [i * 215, 0, 220, 188],
+        '@varname', scriptingBaseName + i)
     }
   }
 }

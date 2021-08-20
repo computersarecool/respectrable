@@ -1,3 +1,5 @@
+/* global post, messagename, outlet, LiveAPI, jsarguments */
+
 inlets = 1
 outlets = 1
 autowatch = 1
@@ -9,7 +11,7 @@ function anything () {
   'use strict'
 
   if (messagename === 'bang') {
-    makeClipSlots()
+    recreateClipSlots()
   }
 }
 
@@ -22,17 +24,18 @@ function removeClipSlots (maxObj) {
   }
 }
 
-function makeClipSlots () {
+function recreateClipSlots () {
   'use strict'
 
   var apiObject = new LiveAPI(path.split('/').join(' '))
   var numClipSlots = apiObject.getcount('clip_slots')
-
   this.patcher.apply(removeClipSlots)
 
   if (numClipSlots) {
     for (var i = 0; i < numClipSlots; i += 1) {
-      this.patcher.newdefault(200, 200, 'bpatcher', 'live_clip_slot.maxpat', '@args', path + '/clip_slots/' + i, i, '@presentation', 1, '@patching_rect', [128 + (i - 1) * 103, 462, 105, 32], '@presentation_rect', [0, 22 * i, 120, 22], '@varname', 'clip_slot_' + i)
+      this.patcher.newdefault(200, 200, 'bpatcher', 'live_clip_slot.maxpat', '@args', path + '/clip_slots/' + i, i,
+        '@presentation', 1, '@patching_rect', [128 + (i - 1) * 103, 462, 105, 32], '@presentation_rect', [0, 22 * i, 120, 22],
+        '@varname', 'clip_slot_' + i)
     }
   }
 }

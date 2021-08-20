@@ -1,10 +1,8 @@
-/* global post, messagename, outlet, LiveAPI */
+/* global post, messagename, outlet, LiveAPI, jsarguments */
 
 inlets = 1
 outlets = 1
 autowatch = 1
-
-var getState = require('get_state').getState
 
 // Check if a value should be returned
 function validateReturnValue (returnArray, returnValue) {
@@ -32,11 +30,8 @@ function validateReturnValue (returnArray, returnValue) {
   }
 }
 
-// Messages come in the form of "/canonicalPath messageType propertyOrFunc [valueOrArgs]"
-// canonicalPath is the LiveAPI path with slashes instead of spaces
-// messageType is 'get', 'set', 'call', 'property' or 'getcount'. There is also the special 'get_state' function
-// [valueOrArgs] is an an optional array of arguments
-// Calling functions that do not exist on objects sends back the same path with a value of 0
+// Messages come in the form of "/canonicalPath messageType propertyOrFunc valueOrArgs"
+// Calling functions that do not exist on objects will send back the same path with a value of 0
 function anything () {
   'use strict'
 
@@ -71,9 +66,6 @@ function anything () {
     case 'get':
       returnValue = apiObj.get(propertyOrFunc)
       returnArray = validateReturnValue(returnArray, returnValue)
-      if (!returnArray) {
-        return
-      }
       break
 
     // Set a property. Follow each `set` with a call to `get` in case it is not observed
@@ -81,45 +73,28 @@ function anything () {
       apiObj.set(propertyOrFunc, valueOrArgs)
       returnValue = apiObj.get(propertyOrFunc)
       returnArray = validateReturnValue(returnArray, returnValue)
-      if (!returnArray) {
-        return
-      }
       break
 
     // Call a function
     case 'call':
       returnValue = apiObj.call(propertyOrFunc, valueOrArgs)
       returnArray = validateReturnValue(returnArray, returnValue)
-      if (!returnArray) {
-        return
-      }
       break
 
     // Get child count
     case 'getcount':
       returnValue = apiObj.getcount(propertyOrFunc)
       returnArray = validateReturnValue(returnArray, returnValue)
-      if (!returnArray) {
-        return
-      }
       break
 
     // Get a "built-in" property
     case 'property':
       returnValue = apiObj[propertyOrFunc]
       returnArray = validateReturnValue(returnArray, returnValue)
-      if (!returnArray) {
-        return
-      }
-      break
-
-    // Special method
-    case 'getstate':
-      var LOM = getState()
-      returnArray[1] = messageType
-      returnArray.push(JSON.stringify(LOM))
       break
   }
 
-  outlet(0, returnArray)
+  if (returnArray) {
+    outlet(0, returnArray)
+  }
 }

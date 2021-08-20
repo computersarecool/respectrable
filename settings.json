@@ -4,23 +4,20 @@
       "0.0.0.0",
       "255.255.255.255"
     ],
-    "tempMaxGUIReceive": {
+    "tempToMaxObject": {
       "port": 9090
     },
-    "tempMaxJSReceive": {
+    "tempToMaxJs": {
       "port": 9091
     },
-    "maxGUIReceive": {
-      "port": 7000
-    },
-    "maxJSReceive": {
-      "port": 7001
-    },
-    "maxGUISend": {
+    "toMaxObject": {
       "port": 8000
     },
-    "maxJSSend": {
+    "toMaxJs": {
       "port": 8001
+    },
+    "fromMax": {
+      "port": 7000
     }
   }
 }

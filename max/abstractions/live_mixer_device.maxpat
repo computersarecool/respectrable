@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 34.0, 77.0, 1867.0, 1289.0 ],
+		"rect" : [ 42.0, 81.0, 1867.0, 1281.0 ],
 		"bgcolor" : [ 1.0, 1.0, 1.0, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -346,7 +346,20 @@
 				}
 
 			}
- ]
+ ],
+		"parameters" : 		{
+
+		}
+,
+		"dependency_cache" : [ 			{
+				"name" : "init_mixer_device.js",
+				"bootpath" : "~/Documents/projects/personal/respectrable/max/scripts",
+				"patcherrelativepath" : "../scripts",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+ ],
+		"autosave" : 0
 	}
 
 }
