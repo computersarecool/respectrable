@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 34.0, 81.0, 1867.0, 1281.0 ],
+		"rect" : [ 42.0, 85.0, 1867.0, 1281.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -423,7 +423,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 36.0, -2.0, 107.0, 19.0 ],
 					"style" : "",
-					"text" : "star_scream",
 					"varname" : "deviceLabel"
 				}
 
@@ -622,7 +621,41 @@
 				}
 
 			}
- ]
+ ],
+		"parameters" : 		{
+			"obj-47::obj-65" : [ "live.text[8]", "live.text[6]", 0 ]
+		}
+,
+		"dependency_cache" : [ 			{
+				"name" : "live_device_parameter_on.maxpat",
+				"bootpath" : "~/Documents/projects/personal/respectrable/max/abstractions",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "init_device_parameter.js",
+				"bootpath" : "~/Documents/projects/personal/respectrable/max/scripts",
+				"patcherrelativepath" : "../scripts",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "live_observe.maxpat",
+				"bootpath" : "~/Documents/projects/personal/respectrable/max/abstractions",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "init_device.js",
+				"bootpath" : "~/Documents/projects/personal/respectrable/max/scripts",
+				"patcherrelativepath" : "../scripts",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+ ],
+		"autosave" : 0
 	}
 
 }

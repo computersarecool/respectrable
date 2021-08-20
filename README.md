@@ -2,7 +2,8 @@
 *Bidirectional communication with Ableton Live via Max for Live*
 
 ## Description
-The first goal with this project is to create a system where any property of a Live set can be changed by sending an [Open Sound Control (OSC)](http://opensoundcontrol.org/introduction-osc) message to the Ableton Live.
+The first goal with this project is to create a system where any property of a Live set can be changed by sending an 
+[Open Sound Control (OSC)](http://opensoundcontrol.org/introduction-osc) message to the Ableton Live.
 
 The second goal is to create a system where Live sends an OSC message when any property of a set changes.
 
@@ -34,9 +35,11 @@ To run tests open both projects and run the `text_tests` DAT operator in TouchDe
 ## Functionality
 Max for Live can access an Ableton Live set in two different ways.
 
-There is a [Javascript API](https://docs.cycling74.com/max8/vignettes/jsliveapi) and there are also [Max objects](https://docs.cycling74.com/max8/vignettes/live_api_overview) which can access properties of a Live set.
+There is a [Javascript API](https://docs.cycling74.com/max8/vignettes/jsliveapi) and there are also 
+[Max objects](https://docs.cycling74.com/max8/vignettes/live_api_overview) which can access properties of a Live set.
 
-Using Max objects [might perform better](https://cycling74.com/forums/javascript-performance-vs-max-objects/) but multiple objects would have to be created for every instance of every class in Live.
+Using Max objects [might perform better](https://cycling74.com/forums/javascript-performance-vs-max-objects/) 
+but multiple objects would have to be created for every instance of every class in Live.
 
 To avoid frustration, respectrable creates objects for many -- but not every -- class in a Live set.
 Objects are created for many classes important for live performance.
@@ -60,7 +63,8 @@ The two different message types should be sent to the ports defined by the follo
 
 `messageType` is the first OSC argument and is either `set`, `get` or `call`.
 
-`property` is the second OSC argument and is either the name of the property that is being set or queried or the name of the function to call.
+`property` is the second OSC argument and is either the name of the property that is being set or queried or the name 
+of the function to call.
 
 `value` is the third OSC argument and should only be included in a `set` message in which case it is the value to set.
 
@@ -77,7 +81,8 @@ Corresponding Responses:
 - `/live_set/tracks/0 ["stop_all_clips", "id", "0"]`
 
 **Note:** Certain properties are considered "LiveAPI" properties (i.e. `id` and `path`). 
-These are different than other property (see the [LOM documentation](https://docs.cycling74.com/max8/vignettes/jsliveapi#LiveAPI_Properties) for details) and can only be reached by using Javascript messages with the format:
+These are different than other property (see the [LOM documentation](https://docs.cycling74.com/max8/vignettes/jsliveapi#LiveAPI_Properties) for details) 
+and can only be reached by using Javascript messages with the format:
 
     `/canonical_path ['property', ${LiveAPI Property}]`
     
@@ -88,12 +93,13 @@ Where `${LiveAPI Property}]` is the name of the property (e.g. `id`).
 ### Observed Property Values
 The following properties or children are observed using [live.observer](https://docs.cycling74.com/max5/refpages/m4l-ref/live.observer.html) objects.
 
-This means that whenever values change (even if directly through the Live GUI) a message with the new property's value will be sent from respectrable with the new value.
+This means that whenever values change (even if directly through the Live GUI) a message with the new property's value 
+will be sent from respectrable with the new value.
 
 - **Song**: `tempo, clip_trigger_quantization, tracks`
 - **Track**: `solo, color, playing_slot_index, fired_slot_index, devices, clip_slots`
 - **MixerDevice DeviceParameter Values**: `volume, track_activator, panning`
-- **Clip**: `name, pitch_coarse, playing_position`
+- **Clip**: `color, name, pitch_coarse, playing_position`
 - **Device**: `name, is_active`
 - **Device DeviceParameter Values**: `name, value`
 
@@ -118,9 +124,17 @@ After initialization the current value for each property that is observed will b
 - `ThisDevice`
 
 ### Extra Notes
-- Because of a [port binding issue](https://cycling74.com/forums/udpreceive-not-really-working-binding-for-osc/) `temp` ports are used to keep ports working in Max during editing.
+- Although adding and deleting tracks and clips is supported, doing so causes the Max for Live device to reinitialize and, 
+  becuase of a [bug](https://cycling74.com/forums/method-pushcontextframepopcontextframe-m4l/) this can cause 
+  your set to perform poorly unless the device is deleted and re-added.
 
-- Because Max [doesn't support multicasting](https://cycling74.com/forums/udp-multicast-messages-without-java) the `hosts` field is an array of the hosts to which messages will be sent. Hostnames and IP addresses both work.
+- Devices have only been thoroughly tested as part of Device Racks with parameters mapped to Macro knobs.
+
+- Because of a [port binding issue](https://cycling74.com/forums/udpreceive-not-really-working-binding-for-osc/) `temp` 
+  ports are used to keep ports working in Max during editing.
+
+- Because Max [doesn't support multicasting](https://cycling74.com/forums/udp-multicast-messages-without-java) the 
+  `hosts` field is an array of the hosts to which messages will be sent. Hostnames and IP addresses both work.
 
 ### Required Software
 - Ableton Live

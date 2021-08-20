@@ -48,8 +48,8 @@ function recreateClipSlotsContainer () {
 
   var apiObject = new LiveAPI(path.split('/').join(' '))
   var scriptingPath = apiObject.path.split(' ').join('/')
-  this.patcher.remove(this.patcher.getnamed('clip_slots_container'))
 
+  this.patcher.remove(this.patcher.getnamed('clip_slots_container'))
   // Make clips if not return or master track
   if (path.substring(0, 12) === '/live_set/tr') {
     this.patcher.newdefault(200, 200, 'bpatcher', 'live_clip_slots.maxpat',
@@ -87,6 +87,10 @@ function updateGUI () {
     guiTrackColor = [(trackColor >> 16 & 255) / 255, (trackColor >> 8 & 255) / 255, (trackColor & 255) / 255, 1.0]
   }
 
+  if (trackName)
+  {
+    trackLabel.message('text', trackName.substring(0, maxTrackNameLength))
+  }
+
   trackLabel.message('bgcolor', guiTrackColor)
-  trackLabel.message('text', trackName.substring(0, maxTrackNameLength))
 }

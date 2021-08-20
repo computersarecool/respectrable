@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 34.0, 77.0, 1454.0, 1289.0 ],
+		"rect" : [ 42.0, 85.0, 1454.0, 1289.0 ],
 		"bgcolor" : [ 1.0, 1.0, 1.0, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -215,29 +215,6 @@
 				}
 
 			}
-, 			{
-				"box" : 				{
-					"args" : [ "/live_set/tracks/0/clip_slots/0/clip" ],
-					"bgmode" : 0,
-					"border" : 0,
-					"clickthrough" : 0,
-					"enablehscroll" : 0,
-					"enablevscroll" : 0,
-					"id" : "obj-3",
-					"lockeddragscroll" : 0,
-					"maxclass" : "bpatcher",
-					"name" : "live_clip.maxpat",
-					"numinlets" : 0,
-					"numoutlets" : 0,
-					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 726.0, 224.0, 125.0, 33.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 0.0, 0.0, 144.0, 26.0 ],
-					"varname" : "clip",
-					"viewvisibility" : 1
-				}
-
-			}
  ],
 		"lines" : [ 			{
 				"patchline" : 				{
@@ -353,7 +330,16 @@
 				}
 
 			}
- ]
+ ],
+		"dependency_cache" : [ 			{
+				"name" : "init_clip_slot.js",
+				"bootpath" : "~/Documents/projects/personal/respectrable/max/scripts",
+				"patcherrelativepath" : "../scripts",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+ ],
+		"autosave" : 0
 	}
 
 }

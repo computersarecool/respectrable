@@ -44,7 +44,7 @@ function recreateChildren () {
   }
 
   // Master track
-  this.patcher.newdefault(200, 200, 'bpatcher', 'live_track.maxpat', '@args', '/live_set/master_track',
+  this.patcher.newdefault(200, 200, 'bpatcher', 'live_track_no_clips_no_solo.maxpat', '@args', '/live_set/master_track',
     '@presentation', 1, '@border', 1, '@patching_rect', [630 + trackSpacing + 121 * numTracks + 121 * numReturns, 166, 121, 595],
     '@presentation_rect', [trackSpacing + 121 * numTracks + 121 * numReturns, 0, 121, 595], '@varname', 'master_track')
 }

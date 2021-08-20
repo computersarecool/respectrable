@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 34.0, 77.0, 1454.0, 1289.0 ],
+		"rect" : [ 42.0, 81.0, 1454.0, 1281.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -583,7 +583,41 @@
 				}
 
 			}
- ]
+ ],
+		"parameters" : 		{
+
+		}
+,
+		"dependency_cache" : [ 			{
+				"name" : "init_song.js",
+				"bootpath" : "~/Documents/projects/personal/respectrable/max/scripts",
+				"patcherrelativepath" : "../scripts",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "live_observe.maxpat",
+				"bootpath" : "~/Documents/projects/personal/respectrable/max/abstractions",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "live_song_view.maxpat",
+				"bootpath" : "~/Documents/projects/personal/respectrable/max/abstractions",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "init_song_view.js",
+				"bootpath" : "~/Documents/projects/personal/respectrable/max/scripts",
+				"patcherrelativepath" : "../scripts",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+ ],
+		"autosave" : 0
 	}
 
 }

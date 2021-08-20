@@ -29,7 +29,6 @@ function recreateClipSlots () {
 
   var apiObject = new LiveAPI(path.split('/').join(' '))
   var numClipSlots = apiObject.getcount('clip_slots')
-
   this.patcher.apply(removeClipSlots)
 
   if (numClipSlots) {
